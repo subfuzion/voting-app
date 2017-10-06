@@ -1,2 +1,2 @@
-# docker-ucdavis-coursera
-Materials for the UC Davis online extension classes for Docker on Coursera
+# UC Davis - Software Containerization with Docker for Developers
+
