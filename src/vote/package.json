@@ -1,0 +1,26 @@
+{
+  "name": "@subfuzion/vote",
+  "version": "1.0.0",
+  "description": "Voting app for Docker Demo",
+  "author": "Tony Pujals <tony@subfuzion.com> (https://twitter.com/subfuzion)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subfuzion/node-vote.git"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --ui tdd"
+  },
+  "engines": {
+    "node": ">=v8.0.0"
+  },
+  "dependencies": {
+    "@subfuzion/database": "^1.0.0",
+    "@subfuzion/queue": "^1.0.1",
+    "body-parser": "~1.18.2",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "morgan": "~1.9.0"
+  }
+}
