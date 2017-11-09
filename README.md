@@ -16,12 +16,19 @@ The process is intentionally manual for the introduction course to allow gaining
 familiarity with various processes. We will build on this until ultimately we have
 a fully automated processes that starts the app services in a Docker swarm.
 
+### Create an overlay network
+
+After ensuring that swarm mode is enabled, create an overlay network that will be shared among the
+services (for now, we will only create one):
+
+    $ docker network create -d overlay --attachable demonet
+
 ### Start a MongoDB container
 
 MongoDB is a NoSQL database that we will use for storing votes. There is already
 an existing image that we can use:
 
-    $ docker run -d -p 27017:27017 --name mongodb mongodb
+    $ docker service create --name mongo -p 27017:27017 --network demonet mongo
 
 ### Start a Redis container
 
@@ -31,7 +38,7 @@ to the MongoDB database for subsquent query processing.
 
 Like, MongoDB, there is already an existing image that we can use:
 
-    $ docker run -d -p 6379:6379 --name queue redis
+    $ docker service create --name redis -p 6379:6379 --network demonet redis
 
 ### Start a Vote Worker container
 
@@ -45,7 +52,7 @@ You will need to build the image first:
 
 Then you can start it:
 
-    $ docker run -d --name worker worker
+    $ docker service create --name worker --network demonet worker
     
 ### Start a Vote API container 
 
@@ -61,14 +68,17 @@ You will need to build the image first:
 
 Then you can start it:
 
-    $ docker run -d --name vote -p 3000:3000 vote
+    $ docker service create --name vote -p 3000:3000 --network demonet vote
 
 ### Run a Vote client container
 
 The `vote` app is a terminal program that you run to cast votes and fetch the
-voting results.
+voting results. We are running this as an interactive container in a terminal,
+not a service, but since we created the overlay network with the `--attachable`
+flag, we can share the network with the container so that it will be able to
+access the vote api by DNS name.
 
-    $ docker run -it --rm subfuzion/voter <cmd>
+    $ docker run -it --rm --network demonet subfuzion/voter demonet <cmd>
 
 where <cmd> is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
