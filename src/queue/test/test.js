@@ -7,22 +7,24 @@ const Redis = require('ioredis')
 const topic = 'queue'
 
 suite('queue tests', () => {
-  // create redis client r with options
-  let r, options = {
+  let options = {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 6379
   }
 
-  setup(() => {
-    r = new Redis(options)
-  })
-
-  teardown(async () => {
-    // make sure to tell redis to close connections or mocha won't exit
-    await r.quit()
-  })
-
   suite('basic redis tests', () => {
+    // redis client
+    let r
+
+    setup(() => {
+      r = new Redis(options)
+    })
+
+    teardown(async () => {
+      // make sure to tell redis to close connections or mocha won't exit
+      await r.quit()
+    })
+
     test('ping redis', async () => {
       let res = await r.ping()
       assert.equal(res, "PONG")
@@ -45,16 +47,15 @@ suite('queue tests', () => {
   }) // basic redis tests
 
   suite('producer-consumer tests', () => {
-
     test('new connection successfully pings', async () => {
-      let conn = new QueueBase(topic)
+      let conn = new QueueBase(topic, options)
       let res = await conn.ping()
       assert.equal(res, "PONG")
       await conn.quit()
     })
 
     test('using connection after quit throws an error', async () => {
-      let conn = new QueueBase(topic)
+      let conn = new QueueBase(topic, options)
       await conn.quit()
       try {
         await conn.ping()
@@ -66,8 +67,8 @@ suite('queue tests', () => {
     })
 
     test('send and receive messages using producer and consumer', async () => {
-      let p = new Producer(topic)
-      let c = new Consumer(topic)
+      let p = new Producer(topic, options)
+      let c = new Consumer(topic, options)
       let vals = [ "a", "b", "c" ]
       vals.forEach(async v => {
         await p.send(v)
@@ -84,7 +85,7 @@ suite('queue tests', () => {
     })
 
     test('can quit waiting consumer', async () => {
-      let c = new Consumer(topic)
+      let c = new Consumer(topic, options)
 
       // wait 200 ms and then close the connection
       setTimeout(() => {

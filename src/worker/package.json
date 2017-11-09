@@ -1,0 +1,22 @@
+{
+  "name": "@subfuzion/worker",
+  "version": "1.0.0",
+  "description": "Worker for Docker demo\"",
+  "repository": "https://github.com/subfuzion/node-queue-worker",
+  "author": "Tony Pujals <tony@subfuzion.com> (https://twitter.com/subfuzion)",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js",
+    "test": "mocha --ui tdd"
+  },
+  "engines": {
+    "node": ">=v8.0.0"
+  },
+  "dependencies": {
+    "@subfuzion/database": "^1.0.0",
+    "@subfuzion/queue": "^1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
