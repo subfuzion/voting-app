@@ -3,8 +3,8 @@
 
 
 "@subfuzion/database@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.0.0.tgz#eeca51c3f1f15b632f31a8713262b12a9f62f075"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.0.1.tgz#89f92dc742ea772af568f555ada253092ae8f092"
   dependencies:
     mongodb "^2.2.33"
     rambda "^1.0.3"
