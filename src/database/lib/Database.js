@@ -84,6 +84,7 @@ class Database {
     if (!this.isConnected) {
       throw new Error('Not connected to database')
     }
+
     checkVote(vote)
 
     if (!vote.voter_id) {
@@ -133,13 +134,13 @@ function checkConfig(c) {
 function checkVote(vote) {
   let errors = []
   if (!vote.vote) {
-    errors.push('vote')
+    errors.push('missing vote property')
   } else {
     if (vote.vote !== 'a' && vote.vote !== 'b') {
-      errors.push('vote (bad value, must be "a" or "b")')
+      errors.push('invalid value for vote: (must be "a" or "b")')
     }
   }
   if (errors.length) {
-    throw new Error(`Invalid vote: missing or invalid ${errors.join(', ')}`)
+    throw new Error(`vote error: ${errors.join(', ')}`)
   }
 }

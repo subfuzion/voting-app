@@ -58,6 +58,17 @@ class QueueBase {
   }
 
   /**
+   * Forcibly close the connection, if necessary.
+   * Calling any other methods will throw 'Connection is closed' errors after this.
+   * @param {boolean} flush Should always be true in production.
+   * @return {Promise<*>}
+   */
+  async end(flush) {
+    this._isClosed = true
+    return await this._client.end(flush)
+  }
+
+  /**
    * Ping the queue to confirm the connection works.
    * @return {Promise<string>} Returns 'PONG' if successful.
    */

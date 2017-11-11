@@ -1,12 +1,19 @@
 const QueueBase = require('./QueueBase')
 
+// redis timeout is in seconds
+const DefaultTimeout = 2
+
 class Consumer extends QueueBase {
   /**
    * Create a new Consumer with a connection to the queue.
-   * @param {object} [config] An object with host and port values.
+   * @param {object} [config] An object with host, port, and timeout properites.
    */
   constructor(topic, config) {
     super(topic, config)
+  }
+
+  get timeout() {
+    return this.config && typeof this.config.timeout !== 'undefined' ? this.config.timeout : DefaultTimeout
   }
 
   /**
@@ -15,8 +22,11 @@ class Consumer extends QueueBase {
    * underlying connection is closed (in which case, it will return null)
    * @return {Promise<*>}
    */
-  async receive() {
-    let res = await this.client.blpop('queue', 1)
+  async receive(timeout) {
+    if (typeof timeout === 'undefined') {
+      timeout = this.timeout
+    }
+    let res = await this.client.blpop('queue', timeout)
     // result is an array [ list, value ], e.g., [ "queue", "a" ]
     return Array.isArray(res) && res.length == 2 ? res[1] : res
   }

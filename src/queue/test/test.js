@@ -47,6 +47,13 @@ suite('queue tests', () => {
   }) // basic redis tests
 
   suite('producer-consumer tests', () => {
+    let ctx
+    // save the mocha context before each test
+    // note that this can't be done using an arrow function
+    beforeEach(function() {
+      ctx = this
+    })
+
     test('new connection successfully pings', async () => {
       let conn = new QueueBase(topic, options)
       let res = await conn.ping()
@@ -88,13 +95,30 @@ suite('queue tests', () => {
       let c = new Consumer(topic, options)
 
       // wait 200 ms and then close the connection
-      setTimeout(() => {
-        c.quit()
-      }, 200)
+      setTimeout(async () => {
+        await c.quit()
+      }, 500)
 
       // blocking wait should return with null as soon as conn is closed when timer fires
-      let result = await c.receive()
+      let result = await c.receive(1)
       assert.equal(result, null)
+    })
+
+    test('consumer should block until it receives a message', async function() {
+      this.timeout(4000)
+      let c = new Consumer(topic, options)
+
+      // wait 200 ms and then close the connection
+      setTimeout(async () => {
+        let p = new Producer(topic, options)
+        await p.send("foo")
+        await p.quit()
+      }, 2500)
+
+      // blocking wait should return with null as soon as conn is closed when timer fires
+      let result = await c.receive(3)
+      assert.equal(result, 'foo')
+      await c.quit()
     })
 
   }) // producer-consumer tests

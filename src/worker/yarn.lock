@@ -10,9 +10,9 @@
     rambda "^1.0.3"
     uuid "^3.1.0"
 
-"@subfuzion/queue@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.0.1.tgz#35c88e379d7c39f077a8372e44da05a9e1ba2a36"
+"@subfuzion/queue@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.3.0.tgz#401feae241a362a5a73f132462f0a29b83c51c19"
   dependencies:
     ioredis "^3.2.1"
     rambda "^1.0.3"
