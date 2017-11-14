@@ -38,7 +38,19 @@ to the MongoDB database for subsquent query processing.
 
 Like, MongoDB, there is already an existing image that we can use:
 
-    $ docker service create --name redis -p 6379:6379 --network demonet redis
+    $ docker service create \
+        --name=redis \
+        --publish=6379:6379 \
+        --network=demonet \
+        --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1'
+        --health-timeout=5s \
+        --health-retries=5 \
+        --health-interval=5s \
+        redis
+
+or as one line:
+
+    $ docker service create --name=redis --publish=6379:6379 --network=demonet --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' --health-timeout=5s --health-retries=5 --health-interval=5s redis
 
 ### Start a Vote Worker container
 

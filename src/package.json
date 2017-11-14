@@ -1,8 +1,0 @@
-{
-  "name": "@subfuzion/vote",
-  "version": "1.0.0",
-  "description": "Voting App for Docker Demo",
-  "main": "index.js",
-  "author": "tony@subfuzion.com",
-  "license": "MIT"
-}

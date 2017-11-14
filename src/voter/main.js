@@ -19,7 +19,20 @@ app
   .description('tally the votes')
   .action(onResults)
 
-app.parse(process.argv)
+try {
+  app.parse(process.argv)
+} catch (err) {
+  onError(err)
+}
+
+process.on('unhandledRejection', error => {
+  onError('(unhandledRejection)', error)
+})
+
+function onError(msg, err) {
+  console.log('error:', ...arguments)
+}
+
 // if no args, print help
 if (!process.argv.slice(2).length) {
   app.outputHelp()
@@ -30,7 +43,7 @@ async function onVote(cmd, opts) {
   let q = {
     type: 'list',
     name: 'vote',
-    message: 'What are the pets?',
+    message: 'What do you like better?',
     choices: ['(quit)', 'cats', 'dogs'],
     filter: val => val === '(quit)' ? 'q' : val === 'cats' ? 'a' : 'b'
   }
@@ -46,12 +59,14 @@ async function onResults(cmd, opts) {
 }
 
 function voteToString(vote) {
+  if (!vote) return `error: empty vote result`
   let id = vote.voter_id ? `${vote.voter_id}` : '?'
   let choice = vote.vote === 'a' ? 'cats' : 'dogs'
   return `Voter (id: ${id}) voted for: ${choice}`
 }
 
 function tallyToString(tally) {
+  if (!tally) return `error: empty tally result`
   let winner = tally.a > tally.b ? 'CATS WIN!' : tally.b > tally.a ? 'DOGS WIN!' : 'IT\'S A TIE!'
   return `Total votes -> cats: ${tally.a}, dogs: ${tally.b} ... ${winner}`
 }
