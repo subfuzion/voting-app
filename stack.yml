@@ -1,2 +1,53 @@
 version: '3'
 
+networks:
+  frontend_net:
+    driver: overlay
+  backend_net:
+    driver: overlay
+
+services:
+
+  database:
+    image: mongo:3.4
+    networks:
+      backend_net:
+        aliases:
+          - database
+    ports:
+      - "27017:27017"
+
+  queue:
+    image: redis:3.2
+    networks:
+      backend_net:
+        aliases:
+          - queue
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: '[ $$(redis-cli ping) = "PONG" ] || exit 1 ]'
+      timeout: 2s
+      interval: 5s
+      retries: 5
+
+  worker:
+    image: worker
+    networks:
+      - backend_net
+
+  vote:
+    image: vote
+    networks:
+      frontend_net:
+        aliases:
+          - vote
+      backend_net:
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      timeout: 1s
+      interval: 5s
+      retries: 10
+

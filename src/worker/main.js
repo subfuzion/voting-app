@@ -1,17 +1,17 @@
 const Consumer = require('@subfuzion/queue').Consumer
 const Database = require('@subfuzion/database').Database
 
-// set redis connection timeout to 0 since we want the worker queue
+// set queue connection timeout to 0 since we want the worker queue
 // consumer to block indefinitely while waiting for messages
-let redisOptions = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: process.env.REDIS_PORT || 6379,
+let queueOptions = {
+  host: process.env.QUEUE_HOST || 'queue',
+  port: process.env.QUEUE_PORT || 6379,
   timeout: 0
 }
 
-let mongoOptions = {
-  host: process.env.MONGO_HOST || 'localhost',
-  port: process.env.MONGO_PORT || 27017
+let databaseOptions = {
+  host: process.env.DATABASE_HOST || 'database',
+  port: process.env.DATABASE_PORT || 27017
 }
 
 let consumer, db, quitting = false
@@ -40,10 +40,10 @@ async function init() {
 
   console.log('worker initializing')
 
-  db = new Database(mongoOptions)
+  db = new Database(databaseOptions)
   await db.connect()
 
-  consumer = new Consumer('queue', redisOptions)
+  consumer = new Consumer('queue', queueOptions)
   console.log('worker initialized')
 }
 

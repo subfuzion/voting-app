@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@subfuzion/database@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.0.1.tgz#89f92dc742ea772af568f555ada253092ae8f092"
+"@subfuzion/database@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.0.2.tgz#967467977fe06a057cb61ca0f412386d63189f82"
   dependencies:
     mongodb "^2.2.33"
     rambda "^1.0.3"
     uuid "^3.1.0"
 
-"@subfuzion/queue@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.3.0.tgz#401feae241a362a5a73f132462f0a29b83c51c19"
+"@subfuzion/queue@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.4.0.tgz#300c443fa31f212bb707bb29e86b2da428637e9d"
   dependencies:
     ioredis "^3.2.1"
     rambda "^1.0.3"
@@ -292,8 +292,8 @@ process-nextick-args@~1.0.6:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
 rambda@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/rambda/-/rambda-1.0.3.tgz#146035492d1797aa49e1586530246f1c171c0074"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/rambda/-/rambda-1.0.4.tgz#e34bc3caf57291502572ddb6d9a5fc3ca3cc1af0"
 
 readable-stream@2.2.7:
   version "2.2.7"

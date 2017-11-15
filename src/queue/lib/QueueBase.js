@@ -1,18 +1,25 @@
 const common = require('./common')
+const EventEmitter = require('events').EventEmitter
 const R = require('rambda')
 const Redis = require('ioredis')
 
-class QueueBase {
+class QueueBase extends EventEmitter {
   /**
    * Create a new instance with a connection to the queue.
    * @param {string} topic The queue topic to associate with this instance.
    * @param {object} [config] An object with host and port values.
    */
   constructor(topic, config) {
+    super()
     this._topic = topic
     this._config = config || common.DefaultConfig
+    this._config = R.merge(common.DefaultConfig, config || {})
     this._client = new Redis(this.config)
     this._isClosed = false
+
+    ;[ 'connect', 'ready', 'error', 'close', 'reconnecting', 'end', '+node', '-node', 'node error' ].forEach(evt => {
+      this.client.on(evt, this.emit)
+    })
   }
 
   /**
@@ -25,10 +32,10 @@ class QueueBase {
 
   /**
    * Get a copy of the config object.
-   * @return {{}|common.DefaultConfig}
+   * @return {{}}
    */
   get config() {
-    return R.merge({}, this._config)
+    return this._config
   }
 
   /**
@@ -44,7 +51,7 @@ class QueueBase {
    * @return {string}
    */
   get topic() {
-    return this_topic
+    return this._topic
   }
 
   /**

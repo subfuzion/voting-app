@@ -15,7 +15,7 @@ class Producer extends QueueBase {
    * @return {Promise<void>}
    */
   async send(message) {
-    await this.client.rpush('queue', message)
+    await this.client.rpush(this.topic, message)
   }
 }
 

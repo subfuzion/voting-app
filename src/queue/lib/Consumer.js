@@ -26,7 +26,7 @@ class Consumer extends QueueBase {
     if (typeof timeout === 'undefined') {
       timeout = this.timeout
     }
-    let res = await this.client.blpop('queue', timeout)
+    let res = await this.client.blpop(this.topic, timeout)
     // result is an array [ list, value ], e.g., [ "queue", "a" ]
     return Array.isArray(res) && res.length == 2 ? res[1] : res
   }

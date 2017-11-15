@@ -69,8 +69,10 @@ class Database {
   }
 
   async close() {
-    await this._instance.close()
-    this._instance = null
+    if (this._instance) {
+      await this._instance.close()
+      this._instance = null
+    }
     this._isConnected = false
   }
 
