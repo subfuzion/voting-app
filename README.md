@@ -102,3 +102,5 @@ running under Docker. It works by monitoring the logs of each service
 for patterns that must be matched to indicate success. The assessor
 produces a report when complete or when the evaluation times out. 
 
+See [here](https://github.com/subfuzion/docker-ucdavis-coursera/wiki#final-project)
+for instructions on running an assessment for the final project.
