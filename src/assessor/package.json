@@ -2,7 +2,9 @@
   "name": "@subfuzion/assessor",
   "version": "1.0.0",
   "description": "Project assessor for Docker demo",
-  "main": "main.js",
   "author": "Tony Pujals <tony@subfuzion.com> (https://twitter.com/subfuzion)",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node main"
+  }
 }
