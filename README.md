@@ -16,6 +16,8 @@ The app will be used for a course called **Software Containerization with Docker
 [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program that
 will be available through [Coursera](https://www.coursera.org/) in early 2018.
 
+See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for details about the course.
+
 ## Application Architecture
 
 ![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-architecture.png)
