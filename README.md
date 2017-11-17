@@ -1,7 +1,7 @@
 # Docker Voting App (Node.js version)
 
 This app is inspired by the existing [Example Voting App](https://github.com/dockersamples/example-voting-app)
-by [ManoMarks](https://github.com/dockersamples/example-voting-app) at Docker.
+by [ManoMarks](https://github.com/dockersamples/example-voting-app), head of developer relations at Docker.
 
 The existing app is an excellent example of a real world polyglot application, demonstrating
 containerized processes created from a number of different programming languages. In
