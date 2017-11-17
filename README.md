@@ -1,6 +1,4 @@
-# UC Davis - Software Containerization with Docker for Developers
-
-## Docker Voting App (Node.js version)
+# Docker Voting App (Node.js version)
 
 This app is inspired by the existing [Example Voting App](https://github.com/dockersamples/example-voting-app)
 by [ManoMarks](https://github.com/dockersamples/example-voting-app) at Docker.
@@ -9,6 +7,44 @@ The existing app is an excellent example of a real world polyglot application, d
 containerized processes created from a number of different programming languages. In
 contrast, this app is meant to be slightly simpler version intended to support an introductory
 course on Docker using only Node.js and modern JavaScript.
+
+While the voting application is simple in function and appears frivolous, it has been designed
+and implemented to showcase principles of a modern [12-Factor App](https://12factor.net/) using
+a popular programming environment and services while being fairly easy to comprehend.
+
+The app will be used for a course called **Software Containerization with Docker for Developers**, a
+[UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program that
+will be available through [Coursera](https://www.coursera.org/) in early 2018.
+
+## Application Architecture
+
+![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-architecture.png)
+
+The application consists of the following:
+
+ * **Voter** - this is the client application that users use to cast votes.
+ * **Vote** - this is the service that provides a REST API for casting votes and
+   retrieving vote tallies. The `voter` application is the client that uses
+   this API. When a vote is posted to the API, the service pushes it to a queue
+   for subsequent, asynchronous processing. When a request is made for vote
+   results, the service submits a query to a database where votes are ultimately
+   stored by a worker processing the queue.
+ * **Worker** - this is a background service that watches a queue for votes and stores
+   them in a database. The worker represents a typical service component designed
+   to scale as needed to handle various asynchronous processing tasks, typically pulled from a queue,
+   so that the main service doesn't get bogged down handling requests.
+ * **Queue** - this is a service that allows the vote service to post votes without
+   slowing down to do any special processing or waiting for a database to save
+   votes. The queue is an in-memory data store (using Redis) that enhances performance
+   by not requiring the vote service to wait on the database since database operations
+   that involve disk I/O are much slower; consequently, the vote service is ready
+   to continue to accept new API requests faster. Redis (and similar tools) are
+   typical components of many real-world applications that require message queue,
+   publish-subscribe, key-value storage, or caching support.
+ * **Database** - this service (using MongoDB) provides structured data storage and query
+   support. One or more types of database are typical service components of most
+   real world applications.
+
 
 ## Launching the app
 
