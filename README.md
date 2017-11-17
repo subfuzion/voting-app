@@ -52,12 +52,12 @@ The process is intentionally manual for the introduction course to allow gaining
 familiarity with various processes. We will build on this until ultimately we have
 a fully automated processes that starts the app services in a Docker swarm.
 
-### Create an overlay network
+### Create a bridge network
 
-After ensuring that swarm mode is enabled, create an overlay network that will be shared among the
-services (for now, we will only create one):
+Create a bridge network that will be shared by the services for communication with
+each other:
 
-    $ docker network create -d overlay --attachable demonet
+    $ docker network create -d bridge demonet
 
 ### Start a MongoDB container
 
