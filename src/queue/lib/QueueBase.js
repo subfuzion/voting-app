@@ -17,8 +17,11 @@ class QueueBase extends EventEmitter {
     this._client = new Redis(this.config)
     this._isClosed = false
 
+    let that = this
     ;[ 'connect', 'ready', 'error', 'close', 'reconnecting', 'end', '+node', '-node', 'node error' ].forEach(evt => {
-      this.client.on(evt, this.emit)
+      this._client.on(evt, (...args) => {
+        that.emit(evt, ...args)
+      })
     })
   }
 

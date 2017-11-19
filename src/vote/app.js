@@ -9,12 +9,12 @@ const app = express()
 const server = http.createServer(app)
 
 let queueOptions = {
-  host: process.env.QUEUE_HOST || 'queue',
+  host: process.env.QUEUE_HOST || 'localhost',
   port: process.env.QUEUE_PORT || 6379
 }
 
 let databaseOptions = {
-  host: process.env.DATABASE_HOST || 'database',
+  host: process.env.DATABASE_HOST || 'localhost',
   port: process.env.DATABASE_PORT || 27017
 }
 
@@ -32,10 +32,11 @@ app.get('/', (req, res) => {
 })
 
 // vote route handler
-app.post('/vote', (req, res) => {
+app.post('/vote', async (req, res) => {
   try {
     console.log('/vote: %j', req.body)
-    producer.send(req.body)
+    await producer.send(req.body)
+    console.log('queued %j', req.body)
     // for now, just return the request body itself as the result
     res.send({ success: true, result: req.body })
   } catch (err) {
@@ -52,19 +53,32 @@ app.get('/results', (req, res) => {
 // initialize and start running
 ;(async () => {
   try {
-    // initialize queue producer client
-    producer = new Producer(queueOptions)
-    console.log(`connected to queue at ${queueOptions.host}:${queueOptions.port}`)
-    producer.on('error', err => {
-      console.log('[queue]', err)
-    })
-
-    // initialize database client
+    // initialize database client for querying vote results
     db = new Database(databaseOptions)
     await db.connect()
-    console.log(`connected to database at ${databaseOptions.host}:${databaseOptions.port}`)
+    console.log(`connected to database (${databaseOptions.host}:${databaseOptions.port})`)
 
-    // start listening
+    // initialize queue producer client for sending votes to the queue
+    producer = new Producer('queue', queueOptions)
+    producer.on('error', err => {
+      console.log('queue error: ', err)
+    })
+    producer.on('connect', () => {
+      console.log(`connected to queue (${queueOptions.host}:${queueOptions.port})`)
+    })
+    producer.on('ready', () => {
+      console.log(`queue connection ready (${queueOptions.host}:${queueOptions.port})`)
+    })
+    producer.on('close', () => {
+      console.log(`queue connection closed (${queueOptions.host}:${queueOptions.port})`)
+    })
+    producer.on('reconnecting', () => {
+      console.log(`reconnecting to queue (${queueOptions.host}:${queueOptions.port})`)
+    })
+    producer.on('end', () => {
+      console.log(`queue connection end (${queueOptions.host}:${queueOptions.port})`)
+    })
+
     server.listen(port, () => console.log(`listening on port ${port}`))
 
   } catch (err) {

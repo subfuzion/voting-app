@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@subfuzion/database": "1.0.2",
-    "@subfuzion/queue": "1.4.0"
+    "@subfuzion/queue": "1.4.2"
   },
   "devDependencies": {
     "mocha": "^4.0.1"

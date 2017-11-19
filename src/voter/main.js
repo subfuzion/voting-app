@@ -5,8 +5,8 @@ const pkg = require('./package.json')
 const request = require('r2')
 
 let apiOptions = {
-  host: process.env.VOTE_HOST || 'localhost',
-  port: process.env.VOTE_PORT || 3000
+  host: process.env.VOTE_API_HOST || 'localhost',
+  port: process.env.VOTE_API_PORT || 3000
 }
 
 let apiURL = `http://${apiOptions.host}:${apiOptions.port}/`
