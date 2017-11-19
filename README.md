@@ -5,15 +5,21 @@ by [ManoMarks](https://github.com/dockersamples/example-voting-app), head of dev
 
 The existing app is an excellent demonstration of how Docker can be used to containerize any of the
 processes of a modern application regardless of the programming language used and runtime environment
-needed for any specific one; it is a nice example of a [polyglot](http://memeagora.blogspot.com/2006/12/polyglot-programming.html) application.
+needed for any specific one. [Polyglot programming](http://memeagora.blogspot.com/2006/12/polyglot-programming.html)
+is an approach to development that attempts to combine multiple programming languages and databases
+within an application, leveraging each as appropriate for its particular strengths in handling specfic
+types of problems.
 
-While this is very useful, particularly from a devops perspective, if you are interested in studying the
-application itself, this use of multiple languages, even as simple as it is, raises the barrier to comprehension
-slightly. In contrast, this version of the voting app is intended to support an introductory
-course on Docker and meant to be easier to follow and comprehend for those already familiar with modern
-[JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/). In any case the
-use of a single programming language should still be a bit easier to follow for other programmers,
-especially if they are already familiar with at least one other member of the
+While this example is very useful, particularly from a devops perspective, if one is interested in
+studying the application itself, the use of multiple languages, even as simple as it is, raises the
+barrier to comprehension, if ever so slightly.
+
+In contrast, this version of the voting app is intended to support
+an introductory course on Docker and meant to be easier to follow and comprehend for those already
+familiar with modern [JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/).
+
+In any case, however, the use of a single programming language should still facilitate comprehension by programmers
+who are familiar with at least one other member of the
 [C family of languages](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages).
 
 Modest as the app is in terms of functionality (it only supports casting votes and querying the vote
