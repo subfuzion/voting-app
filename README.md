@@ -3,18 +3,28 @@
 This app is inspired by the existing [Example Voting App](https://github.com/dockersamples/example-voting-app)
 by [ManoMarks](https://github.com/dockersamples/example-voting-app), head of developer relations at Docker.
 
-The existing app is an excellent example of a real world polyglot application, demonstrating
-containerized processes created from a number of different programming languages. In
-contrast, this app is meant to be slightly simpler version intended to support an introductory
-course on Docker using only Node.js and modern JavaScript.
+The existing app is an excellent demonstration of how Docker can be used to containerize any of the
+processes of a modern application regardless of the programming language used and runtime environment
+needed for any specific one; it is a nice example of a [polyglot](http://memeagora.blogspot.com/2006/12/polyglot-programming.html) application.
 
-While the voting application is simple in function and appears frivolous, it has been designed
-and implemented to showcase principles of a modern [12-Factor App](https://12factor.net/) using
-a popular programming environment and services while being fairly easy to comprehend.
+While this is very useful, particularly from a devops perspective, if you are interested in studying the
+application itself, this use of multiple languages, even as simple as it is, raises the barrier to comprehension
+slightly. In contrast, this version of the voting app is intended to support an introductory
+course on Docker and meant to be easier to follow and comprehend for those already familiar with modern
+[JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/). In any case the
+use of a single programming language should still be a bit easier to follow for other programmers,
+especially if they are already familiar with at least one other member of the
+[C family of languages](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages).
+
+Modest as the app is in terms of functionality (it only supports casting votes and querying the vote
+tally), nevertheless it has been designed and implemented to showcase principles of a relatively
+sophisticated, modern [12-Factor App](https://12factor.net/) exploiting Docker.
 
 The app will be used for a course called **Software Containerization with Docker for Developers**, a
 [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program that
-will be available through [Coursera](https://www.coursera.org/) in early 2018.
+will be available through [Coursera](https://www.coursera.org/) in early 2018. However, the app
+itself is open source and free for any use in compliance with the terms of the
+[MIT License](https://github.com/subfuzion/example-voting-app-nodejs/blob/master/LICENSE).
 
 See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for details about the course.
 
