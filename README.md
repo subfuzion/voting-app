@@ -153,7 +153,7 @@ access the vote api by DNS name.
 
     $ docker run -it --rm --network demonet subfuzion/voter demonet <cmd>
 
-where <cmd> is either `vote` or `results` (if you don't enter any command,
+where `<cmd>` is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
 
 ### Run the assessor
