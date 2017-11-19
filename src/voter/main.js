@@ -43,10 +43,10 @@ function exit(code, ...args) {
 
 // Handle the vote command and submit request to API.
 async function doVoteCmd(cmd, opts) {
-  // p holds the prompt settings
-  // p.filter is used to transform user-friendly prompt choices to
+  // q holds the prompt settings for the question
+  // q.filter is used to transform user-friendly prompt choices to
   // the required values: 'cats' -> 'a',  'dogs' -> 'b',  '(quit)' -> 'q'
-  let p = {
+  let q = {
     type: 'list',
     name: 'vote',
     message: 'What do you like better?',
@@ -54,8 +54,12 @@ async function doVoteCmd(cmd, opts) {
     filter: val => ( val === '(quit)' ? 'q' : ( val === 'cats' ? 'a' : 'b' ) )
   }
   let a = await inquirer.prompt(p)
+
+  // if the answer is quit then exit
   if (a.vote === 'q') process.exit()
+
   try {
+    // otherwise submit the answer to vote
     let res = await request.post(voteURL, { json: a }).json
     console.log(voteToString(res.result))
   } catch (err) {

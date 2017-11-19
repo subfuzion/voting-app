@@ -4,13 +4,13 @@ const Database = require('@subfuzion/database').Database
 // set queue connection timeout to 0 since we want the worker queue
 // consumer to block indefinitely while waiting for messages
 let queueOptions = {
-  host: process.env.QUEUE_HOST || 'queue',
+  host: process.env.QUEUE_HOST || 'localhost',
   port: process.env.QUEUE_PORT || 6379,
   timeout: 0
 }
 
 let databaseOptions = {
-  host: process.env.DATABASE_HOST || 'database',
+  host: process.env.DATABASE_HOST || 'localhost',
   port: process.env.DATABASE_PORT || 27017
 }
 
@@ -73,17 +73,16 @@ async function quit() {
 }
 
 // start worker
-(async () => {
+;(async () => {
   try {
     await init()
     console.log('worker processing queue')
     while (true) {
       try {
-        let m = await consumer.receive()
-        if (!m) break;
-        let j = JSON.parse(m)
-        console.log('message received: %j', j)
-        let res = await db.updateVote(j)
+        let msg = await consumer.receive()
+        console.log('message received: ', msg)
+        let json = JSON.parse(msg)
+        let res = await db.updateVote(json)
         console.log('message saved: %j', res)
       } catch (err) {
         console.log(err)

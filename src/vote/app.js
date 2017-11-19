@@ -34,20 +34,29 @@ app.get('/', (req, res) => {
 // vote route handler
 app.post('/vote', async (req, res) => {
   try {
-    console.log('/vote: %j', req.body)
-    await producer.send(req.body)
-    console.log('queued %j', req.body)
-    // for now, just return the request body itself as the result
+    console.log('POST /vote: %j', req.body)
+    let v = JSON.stringify(req.body)
+    await producer.send(v)
+    console.log('queued :', v)
+    // for now, just return the request body as the result
     res.send({ success: true, result: req.body })
   } catch (err) {
-    console.log('ERROR /vote: %j', err)
+    console.log('ERROR: POST /vote: %j', err)
     res.send(500, { success: false, reason: err.message })
   }
 })
 
 // results route handler
-app.get('/results', (req, res) => {
-  res.send({ success: true, result: { a: 4, b: 5 }})
+app.get('/results', async (req, res) => {
+  try {
+    console.log('GET /results')
+    let result = await db.tallyVotes()
+    console.log('results: %j', result)
+    res.send({ success: true, result: result })
+  } catch (err) {
+    console.log('ERROR GET /results: %j', err)
+    res.send(500, { success: false, reason: err.message })
+  }
 })
 
 // initialize and start running
