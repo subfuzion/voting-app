@@ -89,7 +89,7 @@ each other:
 MongoDB is a NoSQL database that we will use for storing votes. There is already
 an existing image that we can use:
 
-    $ docker service create --name mongo -p 27017:27017 --network demonet mongo
+    $ docker run -d --network bridgenet --name database mongo
 
 ### Start a Redis container
 
@@ -99,10 +99,10 @@ to the MongoDB database for subsquent query processing.
 
 Like, MongoDB, there is already an existing image that we can use:
 
-    $ docker service create \
-        --name=redis \
-        --publish=6379:6379 \
-        --network=demonet \
+    $ docker run
+        --detach \
+        --name=queue \
+        --network=bridgenet \
         --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1'
         --health-timeout=5s \
         --health-retries=5 \
@@ -111,7 +111,7 @@ Like, MongoDB, there is already an existing image that we can use:
 
 or as one line:
 
-    $ docker service create --name=redis --publish=6379:6379 --network=demonet --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' --health-timeout=5s --health-retries=5 --health-interval=5s redis
+    $ docker run --detach --name=queue --network=demonet --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' --health-timeout=5s --health-retries=5 --health-interval=5s redis
 
 ### Start a Vote Worker container
 
@@ -125,7 +125,7 @@ You will need to build the image first:
 
 Then you can start it:
 
-    $ docker service create --name worker --network demonet worker
+    $ docker run -d --network=bridgenet --name=worker worker
     
 ### Start a Vote API container 
 
@@ -141,17 +141,14 @@ You will need to build the image first:
 
 Then you can start it:
 
-    $ docker service create --name vote -p 3000:3000 --network demonet vote
+    $ docker run -d --network=bridgenet --name=vote vote
 
 ### Run a Vote client container
 
 The `vote` app is a terminal program that you run to cast votes and fetch the
-voting results. We are running this as an interactive container in a terminal,
-not a service, but since we created the overlay network with the `--attachable`
-flag, we can share the network with the container so that it will be able to
-access the vote api by DNS name.
+voting results.
 
-    $ docker run -it --rm --network demonet subfuzion/voter demonet <cmd>
+    $ docker run -it --rm --network=demonet --name=voter subfuzion/voter <cmd>
 
 where `<cmd>` is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
@@ -165,3 +162,4 @@ produces a report when complete or when the evaluation times out.
 
 See [here](https://github.com/subfuzion/docker-ucdavis-coursera/wiki#final-project)
 for instructions on running an assessment for the final project.
+
