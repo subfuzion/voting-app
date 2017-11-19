@@ -5,34 +5,41 @@ by [ManoMarks](https://github.com/dockersamples/example-voting-app), head of dev
 
 The existing app is an excellent demonstration of how Docker can be used to containerize any of the
 processes of a modern application regardless of the programming language used and runtime environment
-needed for any specific one. [Polyglot programming](http://memeagora.blogspot.com/2006/12/polyglot-programming.html)
-is an approach to development that attempts to combine multiple programming languages and databases
-within an application, leveraging each as appropriate for its particular strengths in handling specfic
-types of problems.
+needed for any specific one.
 
-While this example is very useful, particularly from a devops perspective, if one is interested in
-studying the application itself, the use of multiple languages, even as simple as it is, raises the
-barrier to comprehension, if ever so slightly.
+It is an effective example, particularly from a devops perspective. However, if one is interested in
+studying the application source code itself, then the use of multiple languages, even for a simple example,
+potentially raises the barrier to comprehension.
 
-In contrast, this version of the voting app is intended to support
-an introductory course on Docker and meant to be easier to follow and comprehend for those already
-familiar with modern [JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/).
+This version of the voting app has been developed to support an introductory course on Docker and is
+meant to be easier to follow and comprehend due to symmetric use of a single programming language for
+all of the application service and client code, especially for those programmers who have already had
+some exposure to [JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/).
 
-In any case, however, the use of a single programming language should still facilitate comprehension by programmers
-who are familiar with at least one other member of the
-[C family of languages](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages).
+While JavaScript has its quirks, the code for the various packages in this example are written using
+the latest EcmaScript support available in recent (`8.0+`) versions of Node. In particular, the use of
+[async functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+should make control flow easier to follow for developers not as familiar with Node.js asynchronous callback
+conventions.
 
-Modest as the app is in terms of functionality (it only supports casting votes and querying the vote
-tally), nevertheless it has been designed and implemented to showcase principles of a relatively
-sophisticated, modern [12-Factor App](https://12factor.net/) exploiting Docker.
+As modest as the app is in terms of actual functionality (it only supports casting votes and querying
+the vote tally), it has nevertheless been designed to reflect principles of a relatively
+sophisticated architecture implemented as a modern [12-Factor App](https://12factor.net/),
+well suited to showcasing the benefits of Docker.
 
-The app will be used for a course called **Software Containerization with Docker for Developers**, a
-[UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program that
-will be available through [Coursera](https://www.coursera.org/) in early 2018. However, the app
-itself is open source and free for any use in compliance with the terms of the
+## License
+
+The Voting App is open source and free for any use in compliance with the terms of the
 [MIT License](https://github.com/subfuzion/example-voting-app-nodejs/blob/master/LICENSE).
 
-See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for details about the course.
+## Introduction to Docker
+
+The app will be used for an introductory course called **Software Containerization with Docker for Developers**.
+The course is offered through the
+[UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program,
+available through [Coursera](https://www.coursera.org/) in early 2018.
+
+See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for more detail about the course modules.
 
 ## Application Architecture
 
