@@ -1,7 +1,7 @@
 {
-  "name": "@subfuzion/assessor",
+  "name": "@subfuzion/auditor",
   "version": "1.0.0",
-  "description": "Project assessor for Docker demo",
+  "description": "Automated auditor for Docker",
   "author": "Tony Pujals <tony@subfuzion.com> (https://twitter.com/subfuzion)",
   "license": "MIT",
   "scripts": {
