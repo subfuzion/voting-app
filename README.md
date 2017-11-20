@@ -1,3 +1,11 @@
+| Service  | Docker Image           | Build Status |
+|:---------|:-----------------------|:-------------|
+| API      | subfuzion/vote-api     | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-api.svg)](subfuzion/vote-api)
+| Worker   | subfuzion/vote-worker  | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-worker.svg)](subfuzion/vote-worker)
+| Auditor  | subfuzion/vote-auditor | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-auditor.svg)](subfuzion/vote-auditor)
+
+
+
 # Docker Voting App (Node.js version)
 
 This app is inspired by the existing [Example Voting App](https://github.com/dockersamples/example-voting-app)
