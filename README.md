@@ -6,8 +6,8 @@
 
 | Package  | npm           |
 |:---------|:-----------------------|
-| @subfuzion/database | [![npm version](https://badge.fury.io/js/%40subfuzion%2Fdatabase.svg)](https://badge.fury.io/js/%40subfuzion%2Fdatabase)
-| @subfuzion/queue    | [![npm version](https://badge.fury.io/js/%40subfuzion%2Fqueue.svg)](https://badge.fury.io/js/%40subfuzion%2Fqueue)
+| @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database)
+| @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue)
 
 # Docker Voting App (Node.js version)
 
