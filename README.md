@@ -4,8 +4,8 @@
 | Worker   | subfuzion/vote-worker  | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-worker.svg)](subfuzion/vote-worker)
 | Auditor  | subfuzion/vote-auditor | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-auditor.svg)](subfuzion/vote-auditor)
 
-| Package  | npm           |
-|:---------|:-----------------------|
+| Node.js Packages    | npm           |
+|:--------------------|:-----------------------|
 | @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database)
 | @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue)
 
