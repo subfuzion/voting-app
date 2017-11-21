@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/%40subfuzion%2Fdatabase.svg)](https://badge.fury.io/js/%40subfuzion%2Fdatabase)
+[![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database)
 
 # @subfuzion/database
 
