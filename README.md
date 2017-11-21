@@ -4,7 +4,10 @@
 | Worker   | subfuzion/vote-worker  | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-worker.svg)](subfuzion/vote-worker)
 | Auditor  | subfuzion/vote-auditor | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-auditor.svg)](subfuzion/vote-auditor)
 
-
+| Package  | npm           |
+|:---------|:-----------------------|
+| @subfuzion/database | [![npm version](https://badge.fury.io/js/%40subfuzion%2Fdatabase.svg)](https://badge.fury.io/js/%40subfuzion%2Fdatabase)
+| @subfuzion/queue    | [![npm version](https://badge.fury.io/js/%40subfuzion%2Fqueue.svg)](https://badge.fury.io/js/%40subfuzion%2Fqueue)
 
 # Docker Voting App (Node.js version)
 
