@@ -1,4 +1,5 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database)
+[![node (scoped)](https://img.shields.io/node/v/@subfuzion/queue.svg)](@subfuzion/queue)
 
 # @subfuzion/queue
 
