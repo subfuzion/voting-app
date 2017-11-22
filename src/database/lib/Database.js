@@ -129,20 +129,26 @@ function checkConfig(c) {
     if (!c.db) errors.push('db')
   }
   if (errors.length) {
+    // don't forget to update test if error string is updated
     throw new Error(`Invalid config. Provide a valid url (or uri) property value, or else valid values for the following: ${errors.join(', ')}`)
   }
 }
 
 function checkVote(vote) {
   let errors = []
-  if (!vote.vote) {
-    errors.push('missing vote property')
+  if (!vote) {
+    errors.push('missing vote')
   } else {
-    if (vote.vote !== 'a' && vote.vote !== 'b') {
-      errors.push('invalid value for vote: (must be "a" or "b")')
+    if (!vote.vote) {
+      errors.push('missing vote property')
+    } else {
+      if (vote.vote !== 'a' && vote.vote !== 'b') {
+        errors.push('invalid value for vote: (must be "a" or "b")')
+      }
     }
   }
   if (errors.length) {
-    throw new Error(`vote error: ${errors.join(', ')}`)
+    // don't forget to update test if error string is updated
+    throw new Error(`Invalid vote: ${errors.join(', ')}`)
   }
 }
