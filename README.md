@@ -38,6 +38,10 @@ the vote tally), it has nevertheless been designed to reflect principles of a re
 sophisticated architecture implemented as a modern [12-Factor App](https://12factor.net/),
 well suited to showcasing the benefits of Docker.
 
+### Goal
+
+The first goal is to introduce basic Docker concepts, so the initial instructions reflect that. Subsequent goals include introducing Docker swarm orchestration concepts, and then refactoring the application architecture to expore evolving paradigms, such as serverless function computing. Real world concerns, such as monitoring, rolling updates, etc., will also be introduced.
+
 ## License
 
 The Voting App is open source and free for any use in compliance with the terms of the
