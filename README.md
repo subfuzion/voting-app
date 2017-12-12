@@ -11,10 +11,9 @@
 
 # Docker Voting App (Node.js version)
 
-This app is inspired by the existing [Example Voting App](https://github.com/dockersamples/example-voting-app)
-by [ManoMarks](https://twitter.com/ManoMarks), head of developer relations at Docker.
+This app is inspired by the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
-The existing app is an excellent demonstration of how Docker can be used to containerize any of the
+The original app is an excellent demonstration of how Docker can be used to containerize any of the
 processes of a modern application regardless of the programming language used and runtime environment
 needed for any specific one.
 
