@@ -19,7 +19,10 @@ needed for any specific one.
 
 It is an effective example, particularly from a devops perspective. However, if one is interested in
 studying the application source code itself, then the use of multiple languages, even for a simple example,
-potentially raises the barrier to comprehension.
+potentially raises the barrier to comprehension. Furthermore, because each different language/platform has specific
+runtime requirements, understanding the differences also increases some of the cognitive overhead required. The ability
+to encapsulate these runtime differences through different images is a big part of the value proposition of Docker
+and its ecosystem, but it does add extra overhead that we can at least avoid in the beginning.  
 
 This version of the voting app has been developed to support an introductory course on Docker and is
 meant to be easier to follow and comprehend due to symmetric use of a single programming language for
