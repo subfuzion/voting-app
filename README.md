@@ -99,7 +99,7 @@ a fully automated processes that starts the app services in a Docker swarm.
 Create a bridge network that will be shared by the services for communication with
 each other:
 
-    $ docker network create -d bridge demonet
+    $ docker network create -d bridge bridgenet
 
 ### Start a MongoDB container
 
@@ -116,11 +116,11 @@ to the MongoDB database for subsquent query processing.
 
 Like, MongoDB, there is already an existing image that we can use:
 
-    $ docker run
+    $ docker run \
         --detach \
         --name=queue \
         --network=bridgenet \
-        --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1'
+        --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' \
         --health-timeout=5s \
         --health-retries=5 \
         --health-interval=5s \
@@ -128,7 +128,7 @@ Like, MongoDB, there is already an existing image that we can use:
 
 or as one line:
 
-    $ docker run --detach --name=queue --network=demonet --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' --health-timeout=5s --health-retries=5 --health-interval=5s redis
+    $ docker run --detach --name=queue --network=bridgenet --health-cmd='[ $(redis-cli ping) = "PONG" ] || exit 1' --health-timeout=5s --health-retries=5 --health-interval=5s redis
 
 ### Start a Vote Worker container
 
@@ -165,7 +165,7 @@ Then you can start it:
 The `vote` app is a terminal program that you run to cast votes and fetch the
 voting results.
 
-    $ docker run -it --rm --network=demonet --name=voter subfuzion/voter <cmd>
+    $ docker run -it --rm --network=bridgenet --name=voter subfuzion/voter <cmd>
 
 where `<cmd>` is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
