@@ -42,7 +42,7 @@ well suited to showcasing the benefits of Docker.
 
 ### Goal
 
-The first goal is to introduce basic Docker concepts, so the initial instructions reflect that. Subsequent goals include introducing Docker swarm orchestration concepts, and then refactoring the application architecture to expore evolving paradigms, such as serverless function computing. Real world concerns, such as monitoring, rolling updates, etc., will also be introduced.
+The first goal is to introduce basic Docker concepts, so the initial instructions reflect that. Subsequent goals include introducing Docker swarm orchestration concepts, and then refactoring the application architecture to explore evolving paradigms, such as serverless function computing. Real world concerns, such as monitoring, rolling updates, etc., will also be introduced.
 
 ## License
 
@@ -165,7 +165,14 @@ Then you can start it:
 The `vote` app is a terminal program that you run to cast votes and fetch the
 voting results.
 
-    $ docker run -it --rm --network=bridgenet --name=voter subfuzion/voter <cmd>
+You will need to build the image first:
+
+    $ cd voter
+    $ docker build -t voter .
+
+Then you can start it:
+
+    $ docker run -it --rm --network=bridgenet --name=voter voter <cmd>
 
 where `<cmd>` is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
