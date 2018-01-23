@@ -9,28 +9,29 @@ suite('database tests', () => {
   suite('basic mongo wrapper tests', () => {
 
     let db
-    let dbname = `testdb_${uuid()}`
+    let dbName = `testdb_${uuid()}`
 
     before(async () => {
       // Get the defaults, but override with the generated database name
       // and HOST and PORT environment values, if provided.
       let config = common.DefaultConfig
-      config.db = dbname
+      config.db = dbName
       config.host = process.env.HOST || config.host
       config.port = process.env.PORT || config.port
 
       db = new Database(config)
-      assert.equal(db.connectionURL, `mongodb://${config.host}:${config.port}/${dbname}`)
+      assert.equal(db.connectionURL, `mongodb://${config.host}:${config.port}/${dbName}`)
       await db.connect()
-      assert.equal(db.instance.databaseName, dbname)
+      assert.ok(db.instance)
+      assert.equal(db.instance.databaseName, dbName)
       assert.equal(db.isConnected, true)
-      assert.notEqual(db.instance, null)
     })
 
     after(async () => {
       await db.instance.dropDatabase()
       await db.close()
       assert.equal(db.isConnected, false)
+      assert.equal(db.client, null)
       assert.equal(db.instance, null)
     })
 
@@ -42,7 +43,7 @@ suite('database tests', () => {
       let doc = await db.updateVote(v)
       assert.ok(doc)
       assert.equal(doc.vote, v.vote)
-      assert.notEqual(doc.voter_id, null)
+      assert.ok(doc.voter_id)
     })
 
     test('missing vote property should throw', async () => {

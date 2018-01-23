@@ -1,6 +1,6 @@
 {
   "name": "@subfuzion/voter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Voting app for Docker demo",
   "repository": "https://github.com/subfuzion/node-voter",
   "author": "Tony Pujals <tony@subfuzion.com> (https://twitter.com/subfuzion)",

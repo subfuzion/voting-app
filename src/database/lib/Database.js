@@ -12,6 +12,7 @@ class Database {
    * @throws {Error} if invalid config is provided.
    */
   constructor(config) {
+    this._client = null
     this._instance = null
     this._isConnected = false
     this._config = Object.assign(common.DefaultConfig, config || {})
@@ -24,7 +25,7 @@ class Database {
    * @return {{}|common.DefaultConfig}
    */
   get config() {
-    return R.merge({}, this._config)
+    return Object.assign({}, this._config)
   }
 
   /**
@@ -50,6 +51,14 @@ class Database {
   }
 
   /**
+   * Return the actual connected client after connecting.
+   * @return {*}
+   */
+  get client() {
+    return this._client
+  }
+
+  /**
    * Return the actual database instance after connecting.
    * @return {*}
    */
@@ -63,13 +72,18 @@ class Database {
    * @return {Promise<void>}
    */
   async connect() {
-    this._instance = await Client.connect(this.connectionURL)
+    if (this._isConnected) {
+      throw new Error('Already connected')
+    }
+    this._client = await Client.connect(this.connectionURL)
+    this._instance = await this._client.db(this.config.db)
     this._isConnected = true
   }
 
   async close() {
-    if (this._instance) {
-      await this._instance.close()
+    if (this._client) {
+      await this._client.close()
+      this._client = null
       this._instance = null
     }
     this._isConnected = false
@@ -92,7 +106,7 @@ class Database {
       vote.voter_id = uuid()
     }
 
-    let col = this.instance.collection('votes')
+    let col = await this.instance.collection('votes')
     let result = await col.findOneAndUpdate({ voter_id: vote.voter_id },
       { $set: { vote: vote.vote }},
       { returnOriginal: false, sort: [['voter_id',1]], upsert: true })
@@ -107,7 +121,7 @@ class Database {
    * @return {Promise<{a: number, b: number}>}
    */
   async tallyVotes() {
-    let col = this.instance.collection('votes')
+    let col = await this.instance.collection('votes')
     let count_a = await col.count({ vote: 'a' })
     let count_b = await col.count({ vote: 'b' })
     return {
