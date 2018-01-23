@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: vote
+spec:
+  selector:
+    app: vote-pod
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
