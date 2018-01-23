@@ -10,12 +10,12 @@ spec:
     image: vote
     ports:
     - containerPort: 3000
-  readinessProbe:
-    exec:
-      command:
-      - "curl"
-      - "-f"
-      - "http://localhost"
-    timeoutSeconds: 1
-    periodSeconds: 5
-    failureThreshold: 10
+    readinessProbe:
+      exec:
+        command:
+        - "curl"
+        - "-f"
+        - "http://localhost"
+      timeoutSeconds: 1
+      periodSeconds: 5
+      failureThreshold: 10

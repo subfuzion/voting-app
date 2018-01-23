@@ -10,10 +10,10 @@ spec:
     image: redis:3.2
     ports:
     - containerPort: 6379
-  readinessProbe:
-    exec:
-    command:
-    - "[ $$(redis-cli ping) = "PONG" ] || exit 1 ]"
-    periodSeconds: 5
-    timeoutSeconds: 2
-    failureThreshold: 5
+    readinessProbe:
+      exec:
+        command:
+        - "[ $$(redis-cli ping) = \"PONG\" ] || exit 1 ]"
+      periodSeconds: 5
+      timeoutSeconds: 2
+      failureThreshold: 5
