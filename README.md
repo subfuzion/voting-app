@@ -1,13 +1,13 @@
 | Service  | Docker Image           | Build Status |
 |:---------|:-----------------------|:-------------|
-| API      | subfuzion/vote-api     | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-api.svg)](subfuzion/vote-api)
-| Worker   | subfuzion/vote-worker  | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-worker.svg)](subfuzion/vote-worker)
-| Auditor  | subfuzion/vote-auditor | [![Docker Build Status](https://img.shields.io/docker/build/subfuzion/vote-auditor.svg)](subfuzion/vote-auditor)
+| API      | subfuzion/vote-api     | [![Docker Automated build](https://img.shields.io/docker/automated/subfuzion/vote-api.svg)](https://hub.docker.com/r/subfuzion/vote-api/)
+| Worker   | subfuzion/vote-worker  | [![Docker Automated build](https://img.shields.io/docker/automated/subfuzion/vote-worker.svg)](https://hub.docker.com/r/subfuzion/vote-worker/)
+| Auditor  | subfuzion/vote-auditor | [![Docker Automated build](https://img.shields.io/docker/automated/subfuzion/vote-auditor.svg)](https://hub.docker.com/r/subfuzion/vote-auditor/)
 
 | Node.js Packages    | npm                    | Build Status |
 |:--------------------|:-----------------------|:------------ |
-| @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](subfuzion/docker-voting-app-nodejs)
-| @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](subfuzion/docker-voting-app-nodejs)
+| @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://github.com/subfuzion/docker-voting-app-nodejs)
+| @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://github.com/subfuzion/docker-voting-app-nodejs)
 
 # Docker Voting App (Node.js version)
 
