@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: database
+spec:
+  selector:
+    app: database-pod
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017

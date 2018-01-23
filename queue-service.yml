@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: queue
+spec:
+  selector:
+    app: queue-pod
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
