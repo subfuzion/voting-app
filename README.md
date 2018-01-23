@@ -1,8 +1,8 @@
 | Service  | Docker Image           | Build Status |
 |:---------|:-----------------------|:-------------|
-| API      | subfuzion/vote-api     | [![Docker build](https://img.shields.io/docker/subfuzion/vote-api.svg)](https://hub.docker.com/r/subfuzion/vote-api/)
-| Worker   | subfuzion/vote-worker  | [![Docker build](https://img.shields.io/docker/subfuzion/vote-worker.svg)](https://hub.docker.com/r/subfuzion/vote-worker/)
-| Auditor  | subfuzion/vote-auditor | [![Docker build](https://img.shields.io/docker/subfuzion/vote-auditor.svg)](https://hub.docker.com/r/subfuzion/vote-auditor/)
+| API      | subfuzion/vote-api     | [![Docker build](https://img.shields.io/docker/build/subfuzion/vote-api.svg)](https://hub.docker.com/r/subfuzion/vote-api/)
+| Worker   | subfuzion/vote-worker  | [![Docker build](https://img.shields.io/docker/build/subfuzion/vote-worker.svg)](https://hub.docker.com/r/subfuzion/vote-worker/)
+| Auditor  | subfuzion/vote-auditor | [![Docker build](https://img.shields.io/docker/build/subfuzion/vote-auditor.svg)](https://hub.docker.com/r/subfuzion/vote-auditor/)
 
 | Node.js Packages    | npm                    | Build Status |
 |:--------------------|:-----------------------|:------------ |
