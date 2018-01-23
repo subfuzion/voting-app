@@ -1,6 +1,5 @@
 const common = require('./common')
 const mongodb = require('mongodb')
-const R = require('rambda')
 const uuid = require('uuid/v1')
 
 const Client = mongodb.MongoClient
@@ -15,7 +14,7 @@ class Database {
   constructor(config) {
     this._instance = null
     this._isConnected = false
-    this._config = R.merge(common.DefaultConfig, config || {})
+    this._config = Object.assign(common.DefaultConfig, config || {})
     checkConfig(this._config)
   }
 

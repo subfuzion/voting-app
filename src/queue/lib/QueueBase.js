@@ -1,6 +1,5 @@
 const common = require('./common')
 const EventEmitter = require('events').EventEmitter
-const R = require('rambda')
 const Redis = require('ioredis')
 
 class QueueBase extends EventEmitter {
@@ -13,7 +12,7 @@ class QueueBase extends EventEmitter {
     super()
     this._topic = topic
     this._config = config || common.DefaultConfig
-    this._config = R.merge(common.DefaultConfig, config || {})
+    this._config = Object.assign(common.DefaultConfig, config || {})
     this._client = new Redis(this.config)
     this._isClosed = false
 
