@@ -8,14 +8,15 @@ spec:
   containers:
   - name: vote
     image: vote
+    imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 3000
-    readinessProbe:
-      exec:
-        command:
-        - "curl"
-        - "-f"
-        - "http://localhost"
-      timeoutSeconds: 1
-      periodSeconds: 5
-      failureThreshold: 10
+    env:
+    - name: DATABASE_HOST
+      value: "database.default.svc.cluster.local"
+    - name: DATABASE_PORT
+      value: "27017"
+    - name: QUEUE_HOST
+      value: "queue.default.svc.cluster.local"
+    - name: QUEUE_PORT
+      value: "6379"
