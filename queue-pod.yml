@@ -13,7 +13,9 @@ spec:
     readinessProbe:
       exec:
         command:
-        - "[ $$(redis-cli ping) = \"PONG\" ] || exit 1"
+        - sh
+        - -c
+        - '[ $(redis-cli ping) = PONG ]'
       periodSeconds: 5
       timeoutSeconds: 2
       failureThreshold: 5
