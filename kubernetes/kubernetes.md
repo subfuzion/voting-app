@@ -1,11 +1,29 @@
 # Kubernetes deployment
 
-You can deploy the voting app using the following commands:
+The steps below require that you have already [built the images](../README.md).
+
+ If you deployment is on a cloud cluster, tag and push these images on your private registry.
+
+As an example, if [deploying on GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-container-cluster), use a command similar to:
+
+```
+docker tag vote:latest gcr.io/PROJECT_ID/vote:latest
+gcloud docker -- push gcr.io/PROJECT_ID/vote:latest
+docker tag worker:latest gcr.io/PROJECT_ID/worker:latest
+gcloud docker -- push gcr.io/PROJECT_ID/worker:latest
+docker tag voter:latest gcr.io/PROJECT_ID/voter:latest
+gcloud docker -- push gcr.io/PROJECT_ID/voter:latest
+```
+
+You'll then have to modify the worker-deployment.yml and vote-deployment.yml files to replace the name of the image by the tagged one.
+
+You can now Deploy the voting app using the following commands:
 
 ```
 kubectl create -f database-deployment.yml -f database-service.yml -f queue-deployment.yml -f queue-service.yml -f vote-deployment.yml -f vote-service.yml -f worker-deployment.yml
 
 ```
+
 
 Make sure the application is up and running by running the following command:
 ```
@@ -45,6 +63,28 @@ svc/database     ClusterIP   10.101.23.61    <none>        27017/TCP   9s
 svc/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP     5m
 svc/queue        ClusterIP   10.111.198.49   <none>        6379/TCP    9s
 svc/vote         ClusterIP   10.109.15.94    <none>        3000/TCP    9s
+```
+
+For cloud deployments, you can optionally create an ingress for the vote service:
+
+```
+Kubectl create -f vote-ingress.yml
+
+```
+
+Wait for the ingress to be ready (it should have an IP):
+
+```
+kubectl get ingress vote-ingress
+NAME           HOSTS     ADDRESS          PORTS     AGE
+vote-ingress   *         35.227.221.249   80        2h
+```
+
+You can check with your browser that the API is working:
+
+```
+curl 35.227.221.249
+{"success":true,"result":"hello"}
 ```
 
 You can now vote:
