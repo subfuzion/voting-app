@@ -4,7 +4,7 @@ metadata:
   name: vote
 spec:
   selector:
-    app: vote-pod
+    app: vote
   ports:
   - protocol: TCP
     port: 3000
