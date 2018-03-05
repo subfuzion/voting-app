@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Resources for the Voting App (Mongo, Redis)
+Description: Docker Voting App Redis Queue service
 Parameters:
   EnvironmentName:
     Type: String
-    Default: production
+    Default: voteapp
     Description: The environment name, used for locating outputs from the
                  prerequisite stacks
 Resources:

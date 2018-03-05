@@ -9,7 +9,12 @@ let apiOptions = {
   port: process.env.VOTE_API_PORT || 3000
 }
 
-let apiURL = `http://${apiOptions.host}:${apiOptions.port}/`
+let uri = process.env.VOTE_API_URI
+if (!uri.endsWith('/')) {
+  uri += '/'
+}
+
+let apiURL = uri ? uri : `http://${apiOptions.host}:${apiOptions.port}/`
 let voteURL = apiURL + 'vote/'
 let resultsURL = apiURL + 'results/'
 

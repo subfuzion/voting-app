@@ -2,28 +2,35 @@ const assert = require('assert')
 const common = require('../lib/common')
 const Database = require('../lib/Database')
 const R = require('rambda')
-const uuid = require('uuid/v1')
+const shortid = require('shortid')
 
-suite('database tests', () => {
+const TEST_TIMEOUT = 10000
+
+suite('database tests', function() {
+  this.timeout(TEST_TIMEOUT)
 
   suite('basic mongo wrapper tests', () => {
 
     let db
-    let dbName = `testdb_${uuid()}`
+    let dbName = `testdb_${shortid.generate()}`
 
     before(async () => {
       // Get the defaults, but override with the generated database name
-      // and HOST and PORT environment values, if provided.
+      // and if present, the MONGO_URI, or HOST and PORT environment variable values.
       let config = common.DefaultConfig
       config.db = dbName
-      config.host = process.env.HOST || config.host
-      config.port = process.env.PORT || config.port
+
+      config.uri = process.env.MONGO_URI || config.uri
+      if (!config.uri) {
+        config.host = process.env.HOST || config.host
+        config.port = process.env.PORT || config.port
+      }
 
       db = new Database(config)
-      assert.equal(db.connectionURL, `mongodb://${config.host}:${config.port}/${dbName}`)
+      assert.equal(db.connectionURL, config.uri || `mongodb://${config.host}:${config.port}/${config.db}`)
       await db.connect()
       assert.ok(db.instance)
-      assert.equal(db.instance.databaseName, dbName)
+      assert.equal(db.instance.databaseName, config.db)
       assert.equal(db.isConnected, true)
     })
 
@@ -79,6 +86,7 @@ suite('database tests', () => {
     })
 
     test('tally votes', async () => {
+
       // note: the total includes 1 vote for 'a' from a previous test, so
       // account for that by adding one less than the total
       let count_a = 4

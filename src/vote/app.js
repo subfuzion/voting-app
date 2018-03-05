@@ -8,14 +8,22 @@ const port = process.env.PORT || 3000
 const app = express()
 const server = http.createServer(app)
 
-let queueOptions = {
-  host: process.env.QUEUE_HOST || 'localhost',
-  port: process.env.QUEUE_PORT || 6379
+let queueUri
+let queueOptions = {}
+
+if (process.env.REDIS_URI) {
+  queueUri = process.env.REDIS_URI
+} else {
+  queueOptions.host = process.env.REDIS_HOST || process.env.QUEUE_HOST || 'localhost'
+  queueOptions.port = process.env.QUEUE_PORT || 6379
 }
 
-let databaseOptions = {
-  host: process.env.DATABASE_HOST || 'localhost',
-  port: process.env.DATABASE_PORT || 27017
+let databaseOptions = {}
+if (process.env.MONGO_URI) {
+  databaseOptions.uri = process.env.MONGO_URI
+} else {
+  databaseOptions.host = process.env.DATABASE_HOST || 'localhost'
+  databaseOptions.port = process.env.DATABASE_PORT || 27017
 }
 
 let producer, db
@@ -65,18 +73,15 @@ app.get('/results', async (req, res) => {
     // initialize database client for querying vote results
     db = new Database(databaseOptions)
     await db.connect()
-    console.log(`connected to database (${databaseOptions.host}:${databaseOptions.port})`)
+    console.log(`connected to database (${db.connectionURL})`)
 
     // initialize queue producer client for sending votes to the queue
-    producer = new Producer('queue', queueOptions)
+    producer = queueUri ? (new Producer('queue', queueUri, queueOptions)) : (new Producer('queue', queueOptions))
     producer.on('error', err => {
       console.log('queue error: ', err)
     })
     producer.on('connect', () => {
       console.log(`connected to queue (${queueOptions.host}:${queueOptions.port})`)
-    })
-    producer.on('ready', () => {
-      console.log(`queue connection ready (${queueOptions.host}:${queueOptions.port})`)
     })
     producer.on('close', () => {
       console.log(`queue connection closed (${queueOptions.host}:${queueOptions.port})`)
@@ -88,7 +93,13 @@ app.get('/results', async (req, res) => {
       console.log(`queue connection end (${queueOptions.host}:${queueOptions.port})`)
     })
 
-    server.listen(port, () => console.log(`listening on port ${port}`))
+    await new Promise(resolve => {
+      producer.on('ready', async() => {
+        console.log(`queue connection ready (${queueOptions.host}:${queueOptions.port})`)
+        server.listen(port, () => console.log(`listening on port ${port}`))
+        resolve()
+      })
+    })
 
   } catch (err) {
     console.log(err)

@@ -4,14 +4,23 @@ const Database = require('@subfuzion/database').Database
 // set queue connection timeout to 0 since we want the worker queue
 // consumer to block indefinitely while waiting for messages
 let queueOptions = {
-  host: process.env.QUEUE_HOST || 'localhost',
-  port: process.env.QUEUE_PORT || 6379,
   timeout: 0
 }
+let queueUri
 
-let databaseOptions = {
-  host: process.env.DATABASE_HOST || 'localhost',
-  port: process.env.DATABASE_PORT || 27017
+if (process.env.REDIS_URI) {
+  queueUri = process.env.REDIS_URI
+} else {
+  queueOptions.host = process.env.REDIS_HOST || process.env.QUEUE_HOST || 'localhost'
+  queueOptions.port = process.env.QUEUE_PORT || 6379
+}
+
+let databaseOptions = {}
+if (process.env.MONGO_URI) {
+  databaseOptions.uri = process.env.MONGO_URI
+} else {
+  databaseOptions.host = process.env.DATABASE_HOST || 'localhost'
+  databaseOptions.port = process.env.DATABASE_PORT || 27017
 }
 
 let consumer, db, quitting = false
@@ -38,13 +47,30 @@ async function init() {
     await quit()
   })
 
-  console.log('worker initializing')
+  try {
+    console.log('worker initializing')
 
-  db = new Database(databaseOptions)
-  await db.connect()
+    db = new Database(databaseOptions)
+    await db.connect()
+    console.log('connected to database')
 
-  consumer = new Consumer('queue', queueOptions)
-  console.log('worker initialized')
+    consumer = queueUri ? (new Consumer('queue', queueUri, queueOptions)) : (new Consumer('queue', queueOptions))
+    consumer.on('error', err => {
+      console.log(err.message)
+      process.exit(1)
+    })
+    await new Promise(resolve => {
+      consumer.on('ready', async() => {
+        resolve()
+      })
+    })
+    console.log('connected to queue')
+
+    console.log('worker initialized')
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
+  }
 }
 
 // Quit gracefully by closing queue and database connections first.
@@ -96,6 +122,7 @@ async function quit() {
       await quit()
     } catch (err) {
       console.log(err)
+      process.exit(1)
     }
   }
 })()

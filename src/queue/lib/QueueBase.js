@@ -8,12 +8,11 @@ class QueueBase extends EventEmitter {
    * @param {string} topic The queue topic to associate with this instance.
    * @param {object} [config] An object with host and port values.
    */
-  constructor(topic, config) {
+  constructor(topic, config, ...opts) {
     super()
     this._topic = topic
-    this._config = config || common.DefaultConfig
-    this._config = Object.assign(common.DefaultConfig, config || {})
-    this._client = new Redis(this.config)
+    this._config = Object.assign({}, common.DefaultConfig, config)
+    this._client = new Redis(this.config, ...opts)
     this._isClosed = false
 
     let that = this

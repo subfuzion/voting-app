@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Docker Voting App service
+Description: Docker Voting App Mongo Database service
 Parameters:
   EnvironmentName:
     Type: String

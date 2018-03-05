@@ -21,7 +21,7 @@ class Database {
 
   /**
    * Get a copy of the current config.
-   * The config is an object with `host`, `port`, and `db` properties.
+   * The config is an object with `host`, `port`, and `db` OR `uri` (or `url`) properties.
    * @return {{}|common.DefaultConfig}
    */
   get config() {
@@ -35,10 +35,10 @@ class Database {
    * @return {string}
    */
   get connectionURL() {
-    return this.config.url ?
-      this.config.url :
-      this.config.uri ?
-        this.config.uri :
+    return this.config.uri ?
+      this.config.uri :
+      this.config.url ?
+        this.config.url :
         `mongodb://${this.config.host}:${this.config.port}/${this.config.db}`
   }
 

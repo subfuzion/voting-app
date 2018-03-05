@@ -16,8 +16,8 @@
     "node": ">=v8.0.0"
   },
   "dependencies": {
-    "@subfuzion/database": "1.0.5",
-    "@subfuzion/queue": "1.4.4",
+    "@subfuzion/database": "1.0.6",
+    "@subfuzion/queue": "1.4.5",
     "body-parser": "~1.18.2",
     "debug": "~3.1.0",
     "express": "~4.16.0",
