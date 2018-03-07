@@ -1,6 +1,6 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database)
 [![node (scoped)](https://img.shields.io/node/v/@subfuzion/queue.svg)](@subfuzion/queue)
-[![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](subfuzion/docker-voting-app-nodejs)
+[![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
 
 # @subfuzion/queue
 
