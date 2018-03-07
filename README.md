@@ -60,22 +60,22 @@ See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for mo
 
 ## Application Architecture
 
-![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-architecture.png)
+![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-arch-1.png)
 
 The application consists of the following:
 
- * **Voter** - this is the client application that users use to cast votes.
- * **Vote** - this is the service that provides a REST API for casting votes and
+ * **Vote Client** - the command-line application used to cast votes and query voting results.
+ * **Vote API** - the service that provides a REST API for casting votes and
    retrieving vote tallies. The `voter` application is the client that uses
    this API. When a vote is posted to the API, the service pushes it to a queue
    for subsequent, asynchronous processing. When a request is made for vote
    results, the service submits a query to a database where votes are ultimately
    stored by a worker processing the queue.
- * **Worker** - this is a background service that watches a queue for votes and stores
+ * **Worker** - a background service that watches a queue for votes and stores
    them in a database. The worker represents a typical service component designed
    to scale as needed to handle various asynchronous processing tasks, typically pulled from a queue,
    so that the main service doesn't get bogged down handling requests.
- * **Queue** - this is a service that allows the vote service to post votes without
+ * **Queue** - the message queue service that allows the vote api service to post votes without
    slowing down to do any special processing or waiting for a database to save
    votes. The queue is an in-memory data store (using Redis) that enhances performance
    by not requiring the vote service to wait on the database since database operations
@@ -83,7 +83,7 @@ The application consists of the following:
    to continue to accept new API requests faster. Redis (and similar tools) are
    typical components of many real-world applications that require message queue,
    publish-subscribe, key-value storage, or caching support.
- * **Database** - this service (using MongoDB) provides structured data storage and query
+ * **Database** - the database service (using MongoDB) for structured data storage and query
    support. One or more types of database are typical service components of most
    real world applications.
 
@@ -179,10 +179,11 @@ then usage help will be printed to the terminal).
 
 ### Run the assessor
 
-The `assessor` is for evaluating the performance of the Voting App
-running under Docker. It works by monitoring the logs of each service
-for patterns that must be matched to indicate success. The assessor
-produces a report when complete or when the evaluation times out. 
+The `assessor` will be used for evaluating the performance of the Voting App
+running under Docker as part of course verification, primarily by monitoring
+the logs of each service for patterns that must be matched to indicate success.
+Once implemented, the assessor will produce a report when it completes an
+evaluation or when the evaluation times out. 
 
 See [here](https://github.com/subfuzion/example-voting-app-nodejs/wiki#final-project)
 for instructions on running an assessment for the final project.
