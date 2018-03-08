@@ -58,7 +58,7 @@ suite('database tests', function() {
       let v = {}
 
       try {
-        let doc = await db.updateVote(v)
+        await db.updateVote(v)
         throw new Error('Expected an error for bad vote (missing vote property)')
       } catch (err) {
         if (!err.message.startsWith('Invalid vote')) {
@@ -75,7 +75,7 @@ suite('database tests', function() {
       }
 
       try {
-        let doc = await db.updateVote(v)
+        await db.updateVote(v)
         throw new Error('Expected an error for invalid vote (bad value for vote')
       } catch (err) {
         if (!err.message.startsWith('Invalid vote')) {

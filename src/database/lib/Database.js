@@ -80,6 +80,11 @@ class Database {
     this._isConnected = true
   }
 
+  /**
+   * Close the connection to the database.
+   * @throws {Error} Connection error.
+   * @return {Promise<void>}
+   */
   async close() {
     if (this._client) {
       await this._client.close()

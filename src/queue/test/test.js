@@ -27,12 +27,12 @@ suite('queue tests', () => {
 
     test('ping redis', async () => {
       let res = await r.ping()
-      assert.equal(res, "PONG")
+      assert.equal(res, 'PONG')
     })
 
     test('retrieve messages from redis queue in fifo order', async () => {
       let key = topic
-      let vals = [ "a", "b", "c" ]
+      let vals = [ 'a', 'b', 'c' ]
       await r.rpush(key, ...vals)
 
       // check results received in same order sent
@@ -47,6 +47,7 @@ suite('queue tests', () => {
   }) // basic redis tests
 
   suite('producer-consumer tests', () => {
+    /*eslint no-unused-vars: "off"*/
     let ctx
     // save the mocha context before each test
     // note that this can't be done using an arrow function
@@ -57,7 +58,7 @@ suite('queue tests', () => {
     test('new connection successfully pings', async () => {
       let conn = new QueueBase(topic, options)
       let res = await conn.ping()
-      assert.equal(res, "PONG")
+      assert.equal(res, 'PONG')
       await conn.quit()
     })
 
@@ -76,7 +77,7 @@ suite('queue tests', () => {
     test('send and receive messages using producer and consumer', async () => {
       let p = new Producer(topic, options)
       let c = new Consumer(topic, options)
-      let vals = [ "a", "b", "c" ]
+      let vals = [ 'a', 'b', 'c' ]
       vals.forEach(async v => {
         await p.send(v)
       })
@@ -111,7 +112,7 @@ suite('queue tests', () => {
       // wait 200 ms and then close the connection
       setTimeout(async () => {
         let p = new Producer(topic, options)
-        await p.send("foo")
+        await p.send('foo')
         await p.quit()
       }, 2500)
 

@@ -34,10 +34,10 @@ function logError(...args) {
  * @param {*} args Optional string arguments (first string can be a format string)
  */
 function exit(code, ...args) {
-    if (typeof code === 'string') {
-      args.unshift(code)
-      code = 0
-    }
+  if (typeof code === 'string') {
+    args.unshift(code)
+    code = 0
+  }
   if (code === 0) {
     console.log(format(...args))
   } else {
@@ -84,7 +84,7 @@ async function doResultsCmd(cmd, opts) {
 
 // Pretty-print vote.
 function voteToString(vote) {
-  if (!vote) return `error: empty vote result`
+  if (!vote) return 'error: empty vote result'
   let id = vote.voter_id ? `${vote.voter_id}` : '-'
   let choice = ( vote.vote === 'a' ? 'cats' : 'dogs' )
   return `Voter (id: ${id}) voted for: ${choice}`
@@ -92,7 +92,7 @@ function voteToString(vote) {
 
 // Pretty-print vote tally.
 function tallyToString(tally) {
-  if (!tally) return `error: empty tally result`
+  if (!tally) return 'error: empty tally result'
   let a = tally.a, b = tally.b
   let winner = ( a > b  ? 'CATS WIN!' : ( b > a ? 'DOGS WIN!' : 'IT\'S A TIE!' ) )
   return `Total votes -> cats: ${a}, dogs: ${b} ... ${winner}`

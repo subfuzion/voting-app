@@ -99,7 +99,7 @@ async function quit() {
 }
 
 // start worker
-;(async () => {
+(async () => {
   try {
     await init()
     console.log('worker processing queue')
@@ -114,16 +114,15 @@ async function quit() {
         console.log(err)
       }
     }
-    console.log('worker stopped processing queue')
   } catch (err) {
     console.log(err)
   } finally {
     try {
       await quit()
+      console.log('worker stopped processing queue')
     } catch (err) {
       console.log(err)
       process.exit(1)
     }
   }
 })()
-
