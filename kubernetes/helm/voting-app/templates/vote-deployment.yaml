@@ -32,12 +32,3 @@ spec:
             value: "queue.default.svc.cluster.local"
           - name: QUEUE_PORT
             value: "{{ .Values.Queue.ServicePort }}"
-          readinessProbe:
-            exec:
-              command:
-              - "curl"
-              - "-f"
-              - "http://localhost:3000"
-            timeoutSeconds: 1
-            periodSeconds: 5
-            failureThreshold: 10
