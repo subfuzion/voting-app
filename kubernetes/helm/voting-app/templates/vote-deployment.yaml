@@ -20,7 +20,7 @@ spec:
       containers:
         - name: vote
           image: "{{ .Values.Vote.Image }}:{{ .Values.Vote.ImageTag }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
           - containerPort: {{ .Values.Vote.ContainerPort }}
           env:

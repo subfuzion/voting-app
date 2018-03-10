@@ -20,7 +20,7 @@ spec:
       containers:
       - name: worker
         image: "{{ .Values.Worker.Image }}:{{ .Values.Worker.ImageTag }}"
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: DATABASE_HOST
           value: "database.default.svc.cluster.local"
