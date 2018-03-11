@@ -2,6 +2,7 @@ const assert = require('assert');
 const common = require('../lib/common');
 const Database = require('../lib/Database');
 const R = require('rambda');
+const shortid = require('shortid');
 
 const TEST_TIMEOUT = 10000;
 
@@ -12,15 +13,19 @@ suite('database tests', function() {
 
     let db;
 
+    // the randomly generated database name used for testing
+    // (it will be dropped when testing finishes)
+    let dbName = `testdb_${shortid.generate()}`;
+
     before(async () => {
-      // Get defaults values, then override from the environment
+      // Get defaults values, then override from the environment (except for random dbName)
       let config = common.DefaultConfig;
+      config.db = dbName;
 
       config.uri = process.env.MONGO_URI || config.uri;
       if (!config.uri) {
         config.host = process.env.HOST || config.host;
         config.port = process.env.PORT || config.port;
-        config.db = process.env.DB || config.db;
       }
 
       db = new Database(config);
@@ -32,6 +37,7 @@ suite('database tests', function() {
     });
 
     after(async () => {
+      await db.instance.dropDatabase();
       await db.close();
       assert.equal(db.isConnected, false);
       assert.equal(db.client, null);
