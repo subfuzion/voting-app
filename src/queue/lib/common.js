@@ -1,6 +1,6 @@
 const DefaultConfig = {
   host: 'localhost',
   port: 6379
-}
+};
 
-module.exports.DefaultConfig = DefaultConfig
+module.exports.DefaultConfig = DefaultConfig;

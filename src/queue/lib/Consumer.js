@@ -1,7 +1,7 @@
-const QueueBase = require('./QueueBase')
+const QueueBase = require('./QueueBase');
 
 // redis timeout is in seconds
-const DefaultTimeout = 2
+const DefaultTimeout = 2;
 
 class Consumer extends QueueBase {
   /**
@@ -9,11 +9,11 @@ class Consumer extends QueueBase {
    * @param {object} [config] An object with host, port, and timeout properites.
    */
   constructor(topic, config) {
-    super(topic, config)
+    super(topic, config);
   }
 
   get timeout() {
-    return this.config && typeof this.config.timeout !== 'undefined' ? this.config.timeout : DefaultTimeout
+    return this.config && typeof this.config.timeout !== 'undefined' ? this.config.timeout : DefaultTimeout;
   }
 
   /**
@@ -24,13 +24,13 @@ class Consumer extends QueueBase {
    */
   async receive(timeout) {
     if (typeof timeout === 'undefined') {
-      timeout = this.timeout
+      timeout = this.timeout;
     }
-    let res = await this.client.blpop(this.topic, timeout)
+    let res = await this.client.blpop(this.topic, timeout);
     // result is an array [ list, value ], e.g., [ "queue", "a" ]
-    return Array.isArray(res) && res.length == 2 ? res[1] : res
+    return Array.isArray(res) && res.length == 2 ? res[1] : res;
   }
 }
 
-module.exports = Consumer
+module.exports = Consumer;
 

@@ -1,8 +1,8 @@
-const common = require('./common')
-const mongodb = require('mongodb')
-const uuid = require('uuid/v1')
+const common = require('./common');
+const mongodb = require('mongodb');
+const uuid = require('uuid/v1');
 
-const Client = mongodb.MongoClient
+const Client = mongodb.MongoClient;
 
 class Database {
   /**
@@ -12,11 +12,11 @@ class Database {
    * @throws {Error} if invalid config is provided.
    */
   constructor(config) {
-    this._client = null
-    this._instance = null
-    this._isConnected = false
-    this._config = Object.assign(common.DefaultConfig, config || {})
-    checkConfig(this._config)
+    this._client = null;
+    this._instance = null;
+    this._isConnected = false;
+    this._config = Object.assign(common.DefaultConfig, config || {});
+    checkConfig(this._config);
   }
 
   /**
@@ -25,7 +25,7 @@ class Database {
    * @return {{}|common.DefaultConfig}
    */
   get config() {
-    return Object.assign({}, this._config)
+    return Object.assign({}, this._config);
   }
 
   /**
@@ -39,7 +39,7 @@ class Database {
       this.config.uri :
       this.config.url ?
         this.config.url :
-        `mongodb://${this.config.host}:${this.config.port}/${this.config.db}`
+        `mongodb://${this.config.host}:${this.config.port}/${this.config.db}`;
   }
 
   /**
@@ -47,7 +47,7 @@ class Database {
    * @return {boolean}
    */
   get isConnected() {
-    return this._isConnected
+    return this._isConnected;
   }
 
   /**
@@ -55,7 +55,7 @@ class Database {
    * @return {*}
    */
   get client() {
-    return this._client
+    return this._client;
   }
 
   /**
@@ -63,7 +63,7 @@ class Database {
    * @return {*}
    */
   get instance() {
-    return this._instance
+    return this._instance;
   }
 
   /**
@@ -73,11 +73,11 @@ class Database {
    */
   async connect() {
     if (this._isConnected) {
-      throw new Error('Already connected')
+      throw new Error('Already connected');
     }
-    this._client = await Client.connect(this.connectionURL)
-    this._instance = await this._client.db(this.config.db)
-    this._isConnected = true
+    this._client = await Client.connect(this.connectionURL);
+    this._instance = await this._client.db(this.config.db);
+    this._isConnected = true;
   }
 
   /**
@@ -87,11 +87,11 @@ class Database {
    */
   async close() {
     if (this._client) {
-      await this._client.close()
-      this._client = null
-      this._instance = null
+      await this._client.close();
+      this._client = null;
+      this._instance = null;
     }
-    this._isConnected = false
+    this._isConnected = false;
   }
 
   /**
@@ -102,23 +102,23 @@ class Database {
    */
   async updateVote(vote) {
     if (!this.isConnected) {
-      throw new Error('Not connected to database')
+      throw new Error('Not connected to database');
     }
 
-    checkVote(vote)
+    checkVote(vote);
 
     if (!vote.voter_id) {
-      vote.voter_id = uuid()
+      vote.voter_id = uuid();
     }
 
-    let col = await this.instance.collection('votes')
+    let col = await this.instance.collection('votes');
     let result = await col.findOneAndUpdate({ voter_id: vote.voter_id },
       { $set: { vote: vote.vote }},
-      { returnOriginal: false, sort: [['voter_id',1]], upsert: true })
+      { returnOriginal: false, sort: [['voter_id',1]], upsert: true });
     if (!result.ok) {
-      throw new Error(JSON.stringify(result.lastErrorObject))
+      throw new Error(JSON.stringify(result.lastErrorObject));
     }
-    return result.value
+    return result.value;
   }
 
   /**
@@ -126,47 +126,47 @@ class Database {
    * @return {Promise<{a: number, b: number}>}
    */
   async tallyVotes() {
-    let col = await this.instance.collection('votes')
-    let count_a = await col.count({ vote: 'a' })
-    let count_b = await col.count({ vote: 'b' })
+    let col = await this.instance.collection('votes');
+    let count_a = await col.count({ vote: 'a' });
+    let count_b = await col.count({ vote: 'b' });
     return {
       a: count_a,
       b: count_b
-    }
+    };
   }
 
 }
 
-module.exports = Database
+module.exports = Database;
 
 function checkConfig(c) {
-  let errors = []
+  let errors = [];
   if (!c.url || !c.uri) {
-    if (!c.host) errors.push('host')
-    if (!c.port) errors.push('port')
-    if (!c.db) errors.push('db')
+    if (!c.host) errors.push('host');
+    if (!c.port) errors.push('port');
+    if (!c.db) errors.push('db');
   }
   if (errors.length) {
     // don't forget to update test if error string is updated
-    throw new Error(`Invalid config. Provide a valid url (or uri) property value, or else valid values for the following: ${errors.join(', ')}`)
+    throw new Error(`Invalid config. Provide a valid url (or uri) property value, or else valid values for the following: ${errors.join(', ')}`);
   }
 }
 
 function checkVote(vote) {
-  let errors = []
+  let errors = [];
   if (!vote) {
-    errors.push('missing vote')
+    errors.push('missing vote');
   } else {
     if (!vote.vote) {
-      errors.push('missing vote property')
+      errors.push('missing vote property');
     } else {
       if (vote.vote !== 'a' && vote.vote !== 'b') {
-        errors.push('invalid value for vote: (must be "a" or "b")')
+        errors.push('invalid value for vote: (must be "a" or "b")');
       }
     }
   }
   if (errors.length) {
     // don't forget to update test if error string is updated
-    throw new Error(`Invalid vote: ${errors.join(', ')}`)
+    throw new Error(`Invalid vote: ${errors.join(', ')}`);
   }
 }

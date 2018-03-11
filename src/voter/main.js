@@ -1,22 +1,22 @@
-const app = require('commander')
-const format = require('util').format
-const inquirer = require('inquirer')
-const pkg = require('./package.json')
-const request = require('r2')
+const app = require('commander');
+const format = require('util').format;
+const inquirer = require('inquirer');
+const pkg = require('./package.json');
+const request = require('r2');
 
 let apiOptions = {
   host: process.env.VOTE_API_HOST || 'localhost',
   port: process.env.VOTE_API_PORT || 3000
-}
+};
 
-let uri = process.env.VOTE_API_URI
+let uri = process.env.VOTE_API_URI;
 if (uri && !uri.endsWith('/')) {
-  uri += '/'
+  uri += '/';
 }
 
-let apiURL = uri ? uri : `http://${apiOptions.host}:${apiOptions.port}/`
-let voteURL = apiURL + 'vote/'
-let resultsURL = apiURL + 'results/'
+let apiURL = uri ? uri : `http://${apiOptions.host}:${apiOptions.port}/`;
+let voteURL = apiURL + 'vote/';
+let resultsURL = apiURL + 'results/';
 
 /**
  * Log error message. Print 'error:' followed by remaining arguments,
@@ -25,7 +25,7 @@ let resultsURL = apiURL + 'results/'
  * @param {*} args Variable arguments
  */
 function logError(...args) {
-  console.log('error:', format(...args))
+  console.log('error:', format(...args));
 }
 
 /**
@@ -35,18 +35,19 @@ function logError(...args) {
  */
 function exit(code, ...args) {
   if (typeof code === 'string') {
-    args.unshift(code)
-    code = 0
+    args.unshift(code);
+    code = 0;
   }
   if (code === 0) {
-    console.log(format(...args))
+    console.log(format(...args));
   } else {
-    logError(...args)
+    logError(...args);
   }
-  process.exit(code)
+  process.exit(code);
 }
 
 // Handle the vote command and submit request to API.
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
 async function doVoteCmd(cmd, opts) {
   // question holds the prompt settings for the question
   // question.filter is used to transform user-friendly prompt choices to
@@ -57,82 +58,83 @@ async function doVoteCmd(cmd, opts) {
     message: 'What do you like better?',
     choices: ['(quit)', 'cats', 'dogs'],
     filter: val => ( val === '(quit)' ? 'q' : ( val === 'cats' ? 'a' : 'b' ) )
-  }
-  let a = await inquirer.prompt(question)
+  };
+  let a = await inquirer.prompt(question);
 
   // if the answer is quit then exit
-  if (a.vote === 'q') process.exit()
+  if (a.vote === 'q') process.exit();
 
   try {
     // otherwise submit the answer to vote
-    let res = await request.post(voteURL, { json: a }).json
-    console.log(voteToString(res.result))
+    let res = await request.post(voteURL, { json: a }).json;
+    console.log(voteToString(res.result));
   } catch (err) {
-    exit(1, 'command "vote" %s', err.message)
+    exit(1, 'command "vote" %s', err.message);
   }
 }
 
 // Handle the results command and submit request to API.
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
 async function doResultsCmd(cmd, opts) {
   try {
-    let res = await request.get(resultsURL).json
-    console.log(tallyToString(res.result))
+    let res = await request.get(resultsURL).json;
+    console.log(tallyToString(res.result));
   } catch (err) {
-    exit(1, 'command "results" %s', err.message)
+    exit(1, 'command "results" %s', err.message);
   }
 }
 
 // Pretty-print vote.
 function voteToString(vote) {
-  if (!vote) return 'error: empty vote result'
-  let id = vote.voter_id ? `${vote.voter_id}` : '-'
-  let choice = ( vote.vote === 'a' ? 'cats' : 'dogs' )
-  return `Voter (id: ${id}) voted for: ${choice}`
+  if (!vote) return 'error: empty vote result';
+  let id = vote.voter_id ? `${vote.voter_id}` : '-';
+  let choice = ( vote.vote === 'a' ? 'cats' : 'dogs' );
+  return `Voter (id: ${id}) voted for: ${choice}`;
 }
 
 // Pretty-print vote tally.
 function tallyToString(tally) {
-  if (!tally) return 'error: empty tally result'
-  let a = tally.a, b = tally.b
-  let winner = ( a > b  ? 'CATS WIN!' : ( b > a ? 'DOGS WIN!' : 'IT\'S A TIE!' ) )
-  return `Total votes -> cats: ${a}, dogs: ${b} ... ${winner}`
+  if (!tally) return 'error: empty tally result';
+  let a = tally.a, b = tally.b;
+  let winner = ( a > b  ? 'CATS WIN!' : ( b > a ? 'DOGS WIN!' : 'IT\'S A TIE!' ) );
+  return `Total votes -> cats: ${a}, dogs: ${b} ... ${winner}`;
 }
 
 function main() {
   // Ensure any unhandled promise rejections get logged.
   process.on('unhandledRejection', error => {
-    logError('(unhandledRejection)', error)
-  })
+    logError('(unhandledRejection)', error);
+  });
 
   // if no args, print help
   if (!process.argv.slice(2).length) {
-    app.outputHelp()
-    console.log()
-    process.exit()
+    app.outputHelp();
+    console.log();
+    process.exit();
   }
 
-  app.version(pkg.version)
+  app.version(pkg.version);
 
   app.command('vote')
     .description('vote for cats or dogs')
-    .action(doVoteCmd)
+    .action(doVoteCmd);
 
   app.command('results')
     .description('tally the votes')
-    .action(doResultsCmd)
+    .action(doResultsCmd);
 
   app.command('*')
     .action((cmd) => {
-      exit(1, 'unrecognized command ', cmd)
-    })
+      exit(1, 'unrecognized command ', cmd);
+    });
 
   // parsing command line args invokes the app handlers
   try {
-    app.parse(process.argv)
+    app.parse(process.argv);
   } catch (err) {
-    exit(1, err)
+    exit(1, err);
   }
 }
 
-main()
+main();
 

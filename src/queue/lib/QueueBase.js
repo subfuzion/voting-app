@@ -1,6 +1,6 @@
-const common = require('./common')
-const EventEmitter = require('events').EventEmitter
-const Redis = require('ioredis')
+const common = require('./common');
+const EventEmitter = require('events').EventEmitter;
+const Redis = require('ioredis');
 
 class QueueBase extends EventEmitter {
   /**
@@ -9,18 +9,18 @@ class QueueBase extends EventEmitter {
    * @param {object} [config] An object with host and port values.
    */
   constructor(topic, config, ...opts) {
-    super()
-    this._topic = topic
-    this._config = Object.assign({}, common.DefaultConfig, config)
-    this._client = new Redis(this.config, ...opts)
-    this._isClosed = false
+    super();
+    this._topic = topic;
+    this._config = Object.assign({}, common.DefaultConfig, config);
+    this._client = new Redis(this.config, ...opts);
+    this._isClosed = false;
 
     let that = this
     ;[ 'connect', 'ready', 'error', 'close', 'reconnecting', 'end', '+node', '-node', 'node error' ].forEach(evt => {
       this._client.on(evt, (...args) => {
-        that.emit(evt, ...args)
-      })
-    })
+        that.emit(evt, ...args);
+      });
+    });
   }
 
   /**
@@ -28,7 +28,7 @@ class QueueBase extends EventEmitter {
    * @return {boolean}
    */
   get isClosed() {
-    return this._isClosed
+    return this._isClosed;
   }
 
   /**
@@ -36,7 +36,7 @@ class QueueBase extends EventEmitter {
    * @return {{}}
    */
   get config() {
-    return this._config
+    return this._config;
   }
 
   /**
@@ -44,7 +44,7 @@ class QueueBase extends EventEmitter {
    * @return {*}
    */
   get client() {
-    return this._client
+    return this._client;
   }
 
   /**
@@ -52,7 +52,7 @@ class QueueBase extends EventEmitter {
    * @return {string}
    */
   get topic() {
-    return this._topic
+    return this._topic;
   }
 
   /**
@@ -61,8 +61,8 @@ class QueueBase extends EventEmitter {
    * @return {Promise<*>}
    */
   async quit() {
-    this._isClosed = true
-    return await this._client.quit()
+    this._isClosed = true;
+    return await this._client.quit();
   }
 
   /**
@@ -72,8 +72,8 @@ class QueueBase extends EventEmitter {
    * @return {Promise<*>}
    */
   async end(flush) {
-    this._isClosed = true
-    return await this._client.end(flush)
+    this._isClosed = true;
+    return await this._client.end(flush);
   }
 
   /**
@@ -81,8 +81,8 @@ class QueueBase extends EventEmitter {
    * @return {Promise<string>} Returns 'PONG' if successful.
    */
   async ping() {
-    return await this._client.ping()
+    return await this._client.ping();
   }
 }
 
-module.exports = QueueBase
+module.exports = QueueBase;

@@ -1,4 +1,4 @@
-const QueueBase = require('./QueueBase')
+const QueueBase = require('./QueueBase');
 
 class Producer extends QueueBase {
   /**
@@ -6,7 +6,7 @@ class Producer extends QueueBase {
    * @param {object} [config] An object with host and port values.
    */
   constructor(topic, config) {
-    super(topic, config)
+    super(topic, config);
   }
 
   /**
@@ -15,18 +15,18 @@ class Producer extends QueueBase {
    * @return {Promise<void>}
    */
   async send(message) {
-    let t = typeof message
+    let t = typeof message;
     switch (t) {
     case 'string':
-      break
+      break;
     case 'object':
-      message = JSON.stringify(message)
-      break
+      message = JSON.stringify(message);
+      break;
     default:
-      throw new Error("message must be of type 'string' or 'object'")
+      throw new Error("message must be of type 'string' or 'object'");
     }
-    await this.client.rpush(this.topic, message)
+    await this.client.rpush(this.topic, message);
   }
 }
 
-module.exports = Producer
+module.exports = Producer;
