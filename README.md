@@ -20,6 +20,26 @@ The Voting App is open source and free for any use in compliance with the terms 
 | @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
 | @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
 
+## Quick Start
+
+Get Docker for free from the [Docker Store](https://www.docker.com/community-edition#/download).
+This app will work with versions from either the Stable or the Edge channels.
+
+> If you're using [Docker for Windows](https://docs.docker.com/docker-for-windows/) on Windows 10 pro or later, you must also switch to [Linux containers](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers).
+
+Run in this directory:
+
+    $ docker-compose up
+
+You can also run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/).
+If you haven't initialized one yet, run:
+
+    $ docker swarm init
+
+Once you have your swarm, then run:
+
+    $ docker stack deploy --compose-file docker-stack.yml vote
+
 ## About the Voting App
 
 This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
@@ -195,4 +215,3 @@ evaluation or when the evaluation times out.
 
 See [here](https://github.com/subfuzion/example-voting-app-nodejs/wiki#final-project)
 for instructions on running an assessment for the final project.
-
