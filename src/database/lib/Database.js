@@ -147,6 +147,7 @@ class Database {
 
 module.exports = Database;
 
+// validate configs before accepting
 function checkConfig(c) {
   let errors = [];
   if (!c.url || !c.uri) {
@@ -160,6 +161,7 @@ function checkConfig(c) {
   }
 }
 
+// validate votes before accepting
 function checkVote(vote) {
   let errors = [];
   if (!vote) {
