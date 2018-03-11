@@ -1,5 +1,5 @@
 const DefaultConfig = {
-  host: 'localhost',
+  host: 'database',
   port: 27017,
   db: 'voting'
 };

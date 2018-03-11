@@ -2,7 +2,6 @@ const assert = require('assert');
 const common = require('../lib/common');
 const Database = require('../lib/Database');
 const R = require('rambda');
-const shortid = require('shortid');
 
 const TEST_TIMEOUT = 10000;
 
@@ -12,18 +11,16 @@ suite('database tests', function() {
   suite('basic mongo wrapper tests', () => {
 
     let db;
-    let dbName = `testdb_${shortid.generate()}`;
 
     before(async () => {
-      // Get the defaults, but override with the generated database name
-      // and if present, the MONGO_URI, or HOST and PORT environment variable values.
+      // Get defaults values, then override from the environment
       let config = common.DefaultConfig;
-      config.db = dbName;
 
       config.uri = process.env.MONGO_URI || config.uri;
       if (!config.uri) {
         config.host = process.env.HOST || config.host;
         config.port = process.env.PORT || config.port;
+        config.db = process.env.DB || config.db;
       }
 
       db = new Database(config);
@@ -35,7 +32,6 @@ suite('database tests', function() {
     });
 
     after(async () => {
-      await db.instance.dropDatabase();
       await db.close();
       assert.equal(db.isConnected, false);
       assert.equal(db.client, null);
