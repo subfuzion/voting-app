@@ -11,7 +11,7 @@ let queueUri
 if (process.env.REDIS_URI) {
   queueUri = process.env.REDIS_URI
 } else {
-  queueOptions.host = process.env.REDIS_HOST || process.env.QUEUE_HOST || 'localhost'
+  queueOptions.host = process.env.REDIS_HOST || process.env.QUEUE_HOST || 'queue'
   queueOptions.port = process.env.QUEUE_PORT || 6379
 }
 
@@ -19,7 +19,7 @@ let databaseOptions = {}
 if (process.env.MONGO_URI) {
   databaseOptions.uri = process.env.MONGO_URI
 } else {
-  databaseOptions.host = process.env.DATABASE_HOST || 'localhost'
+  databaseOptions.host = process.env.DATABASE_HOST || 'database'
   databaseOptions.port = process.env.DATABASE_PORT || 27017
 }
 

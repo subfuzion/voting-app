@@ -1,0 +1,36 @@
+version: '2.1'
+
+networks:
+  bridge_net:
+    driver: bridge
+
+services:
+
+  database:
+    image: mongo:3.4
+    networks:
+      - bridge_net
+
+  queue:
+    image: redis:3.2
+    networks:
+      - bridge_net
+
+  worker:
+    build: src/worker
+    networks:
+      - bridge_net
+    depends_on:
+      - database
+      - queue
+  
+  vote:
+    build: src/vote
+    networks:
+      - bridge_net
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+      - queue
+      - worker

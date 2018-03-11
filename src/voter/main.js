@@ -10,7 +10,7 @@ let apiOptions = {
 }
 
 let uri = process.env.VOTE_API_URI
-if (!uri.endsWith('/')) {
+if (uri && !uri.endsWith('/')) {
   uri += '/'
 }
 
