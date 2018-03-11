@@ -1,4 +1,4 @@
-version: '2.1'
+version: "2.3"
 
 networks:
   bridge_net:
@@ -33,4 +33,4 @@ services:
     depends_on:
       - database
       - queue
-      - worker
+

@@ -1,0 +1,51 @@
+version: "3.6"
+
+services:
+
+  database:
+    image: mongo:3.4
+    networks:
+      - backend
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  queue:
+    image: redis:3.2
+    networks:
+      - backend
+
+  worker:
+    image: worker
+    networks:
+      - backend
+    depends_on:
+      - queue
+      - database
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  vote:
+    image: vote
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - queue
+      - database
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
