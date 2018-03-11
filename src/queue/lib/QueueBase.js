@@ -1,4 +1,4 @@
-const common = require('./common');
+const defaults = require('./defaults');
 const EventEmitter = require('events').EventEmitter;
 const Redis = require('ioredis');
 
@@ -11,7 +11,7 @@ class QueueBase extends EventEmitter {
   constructor(topic, config, ...opts) {
     super();
     this._topic = topic;
-    this._config = Object.assign({}, common.DefaultConfig, config);
+    this._config = Object.assign({}, defaults.Config, config);
     this._client = new Redis(this.config, ...opts);
     this._isClosed = false;
 

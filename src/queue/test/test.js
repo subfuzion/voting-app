@@ -1,5 +1,6 @@
 const assert = require('assert');
 const Consumer = require('../lib/Consumer');
+const defaults = require('../lib/defaults');
 const Producer = require('../lib/Producer');
 const QueueBase = require('../lib/QueueBase');
 const Redis = require('ioredis');
@@ -7,17 +8,22 @@ const Redis = require('ioredis');
 const topic = 'queue';
 
 suite('queue tests', () => {
-  let options = {
-    host: process.env.HOST || 'localhost',
-    port: process.env.PORT || 6379
-  };
+  // Get default values, then override from the environment if variables are set
+  let config = defaults.Config;
+  config.uri = process.env.REDIS_URI || config.uri;
+  if (!config.uri) {
+    config.host = process.env.HOST || config.host;
+    config.port = process.env.PORT || config.port;
+  }
+  
+  let opts = {};
 
   suite('basic redis tests', () => {
     // redis client
     let r;
 
     setup(() => {
-      r = new Redis(options);
+      r = new Redis(config);
     });
 
     teardown(async () => {
@@ -56,14 +62,14 @@ suite('queue tests', () => {
     });
 
     test('new connection successfully pings', async () => {
-      let conn = new QueueBase(topic, options);
+      let conn = new QueueBase(topic, config, opts);
       let res = await conn.ping();
       assert.equal(res, 'PONG');
       await conn.quit();
     });
 
     test('using connection after quit throws an error', async () => {
-      let conn = new QueueBase(topic, options);
+      let conn = new QueueBase(topic, config, opts);
       await conn.quit();
       try {
         await conn.ping();
@@ -75,8 +81,8 @@ suite('queue tests', () => {
     });
 
     test('send and receive messages using producer and consumer', async () => {
-      let p = new Producer(topic, options);
-      let c = new Consumer(topic, options);
+      let p = new Producer(topic, config, opts);
+      let c = new Consumer(topic, config, opts);
       let vals = [ 'a', 'b', 'c' ];
       vals.forEach(async v => {
         await p.send(v);
@@ -93,7 +99,7 @@ suite('queue tests', () => {
     });
 
     test('can quit waiting consumer', async () => {
-      let c = new Consumer(topic, options);
+      let c = new Consumer(topic, config, opts);
 
       // wait 200 ms and then close the connection
       setTimeout(async () => {
@@ -107,11 +113,11 @@ suite('queue tests', () => {
 
     test('consumer should block until it receives a message', async function() {
       this.timeout(4000);
-      let c = new Consumer(topic, options);
+      let c = new Consumer(topic, config, opts);
 
       // wait 200 ms and then close the connection
       setTimeout(async () => {
-        let p = new Producer(topic, options);
+        let p = new Producer(topic, config, opts);
         await p.send('foo');
         await p.quit();
       }, 2500);
