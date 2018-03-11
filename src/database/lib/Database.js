@@ -1,4 +1,4 @@
-const common = require('./common');
+const defaults = require('./defaults');
 const mongodb = require('mongodb');
 const uuid = require('uuid/v1');
 
@@ -15,7 +15,7 @@ class Database {
     this._client = null;
     this._instance = null;
     this._isConnected = false;
-    this._config = Object.assign(common.DefaultConfig, config || {});
+    this._config = Object.assign(defaults.Config, config || {});
     checkConfig(this._config);
   }
 

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const common = require('../lib/common');
+const defaults = require('../lib/defaults');
 const Database = require('../lib/Database');
 const R = require('rambda');
 const shortid = require('shortid');
@@ -19,7 +19,7 @@ suite('database tests', function() {
 
     before(async () => {
       // Get defaults values, then override from the environment (except for random dbName)
-      let config = common.DefaultConfig;
+      let config = defaults.Config;
       config.db = dbName;
 
       config.uri = process.env.MONGO_URI || config.uri;
