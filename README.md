@@ -1,5 +1,12 @@
 # Docker Voting App (Node.js version)
 
+## License
+
+The Voting App is open source and free for any use in compliance with the terms of the
+[MIT License](https://github.com/subfuzion/example-voting-app-nodejs/blob/master/LICENSE).
+
+## Build Status
+
 | Service  | Docker Image           | Build Status |
 |:---------|:-----------------------|:-------------|
 | API      | subfuzion/vote-api     | [![Docker build](https://img.shields.io/docker/build/subfuzion/vote-api.svg)](https://hub.docker.com/r/subfuzion/vote-api/)
@@ -13,50 +20,49 @@
 | @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
 | @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
 
-This app is inspired by the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
+## About the Voting App
 
-The original app is an excellent demonstration of how Docker can be used to containerize any of the
-processes of a modern application regardless of the programming language used and runtime environment
-needed for any specific one.
+This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
-It is an effective example, particularly from a devops perspective. However, if one is interested in
-studying the application source code itself, then the use of multiple languages, even for a simple example,
-potentially raises the barrier to comprehension. Furthermore, because each different language/platform has specific
-runtime requirements, understanding the differences also increases some of the cognitive overhead required. The ability
-to encapsulate these runtime differences through different images is a big part of the value proposition of Docker
-and its ecosystem, but it does add extra overhead that we can at least avoid in the beginning.  
+The original app is a great demonstration of how Docker can be used to containerize any
+process of a modern application regardless of the programming language used and runtime environment
+needed for each one. From a devops perspective, this is a compelling example of Docker's benefits.
 
-This version of the voting app has been developed to support an introductory course on Docker and is
-meant to be easier to follow and comprehend due to symmetric use of a single programming language for
-all of the application service and client code, especially for those programmers who have already had
-some exposure to [JavaScript](https://www.javascript.com/) and [Node.js](https://nodejs.org/).
+However, if you are a developer who is also interested in hacking on the application a bit to experiment
+with it as well as to extend your knowledge around Docker, then the use of so many different languages can pose
+a slight barrier. This version of the app has been developed to support an introductory course on Docker and
+is meant to be slighly easier to hack on for just that reason.
+
+It's hard to pick a single language that will please everyone. The decision was made to settle on
+[Node.js](https://nodejs.org/) due to its popularity for API development and because of the number
+of programmers who have had some exposure to [JavaScript](https://www.javascript.com/).
 
 While JavaScript has its quirks, the code for the various packages in this example are written using
-the latest EcmaScript support available in recent (`8.0+`) versions of Node. In particular, the use of
+the latest EcmaScript support that is available in LTS (`8.0+`) and later versions of Node (See
+[node.green](http://node.green/)). In particular, the use of
 [async functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
-should make control flow easier to follow for developers not as familiar with Node.js asynchronous callback
-conventions.
+should make control flow somewhat easier to follow for developers not as familiar with Node asynchronous
+callback conventions.
 
 As modest as the app is in terms of actual functionality (it only supports casting votes and querying
-the vote tally), it has nevertheless been designed to reflect principles of a relatively
-sophisticated architecture implemented as a modern [12-Factor App](https://12factor.net/),
-well suited to showcasing the benefits of Docker.
+the vote tally), it has nevertheless been designed to reflect principles of modern
+[12-Factor Apps](https://12factor.net/) well suited to showcasing Docker's benefits.
 
-### Goal
+### Goals
 
-The first goal is to introduce basic Docker concepts, so the initial instructions reflect that. Subsequent goals include introducing Docker swarm orchestration concepts, and then refactoring the application architecture to explore evolving paradigms, such as serverless function computing. Real world concerns, such as monitoring, rolling updates, etc., will also be introduced.
-
-## License
-
-The Voting App is open source and free for any use in compliance with the terms of the
-[MIT License](https://github.com/subfuzion/example-voting-app-nodejs/blob/master/LICENSE).
+The first goal is to introduce basic Docker concepts, so the initial instructions reflect that.
+Subsequent goals include introducing orchestration concepts (such as
+[Docker Swarm mode](https://docs.docker.com/engine/swarm/) and
+[Kubernetes](https://kubernetes.io/), and then refactoring
+the application architecture to explore evolving Cloud-native paradigms.
+Real world concerns, such as monitoring, rolling updates, etc., will also be introduced.
 
 ## Introduction to Docker
 
 The app will be used for an introductory course called **Software Containerization with Docker for Developers**.
-The course is offered through the
+The course will be offered through the
 [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program,
-available through [Coursera](https://www.coursera.org/) in early 2018.
+available on [Coursera](https://www.coursera.org/) sometime in spring of 2018.
 
 See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for more detail about the course modules.
 
@@ -66,18 +72,18 @@ See the [wiki](https://github.com/subfuzion/docker-ucdavis-coursera/wiki) for mo
 
 The application consists of the following:
 
- * **Vote Client** - the command-line application used to cast votes and query voting results.
- * **Vote API** - the service that provides a REST API for casting votes and
+* **Vote Client** - (`voter`) the command-line application used to cast votes and query voting results.
+* **Vote API** - (`vote`) the service that provides a REST API for casting votes and
    retrieving vote tallies. The `voter` application is the client that uses
    this API. When a vote is posted to the API, the service pushes it to a queue
    for subsequent, asynchronous processing. When a request is made for vote
    results, the service submits a query to a database where votes are ultimately
    stored by a worker processing the queue.
- * **Worker** - a background service that watches a queue for votes and stores
+* **Worker** - a background service that watches a queue for votes and stores
    them in a database. The worker represents a typical service component designed
    to scale as needed to handle various asynchronous processing tasks, typically pulled from a queue,
    so that the main service doesn't get bogged down handling requests.
- * **Queue** - the message queue service that allows the vote api service to post votes without
+* **Queue** - the message queue service that allows the vote api service to post votes without
    slowing down to do any special processing or waiting for a database to save
    votes. The queue is an in-memory data store (using Redis) that enhances performance
    by not requiring the vote service to wait on the database since database operations
@@ -85,16 +91,16 @@ The application consists of the following:
    to continue to accept new API requests faster. Redis (and similar tools) are
    typical components of many real-world applications that require message queue,
    publish-subscribe, key-value storage, or caching support.
- * **Database** - the database service (using MongoDB) for structured data storage and query
+* **Database** - the database service (using MongoDB) for structured data storage and query
    support. One or more types of database are typical service components of most
    real world applications.
 
-
 ## Launching the app
 
-The process is intentionally manual for the introduction course to allow gaining
-familiarity with various processes. We will build on this until ultimately we have
-a fully automated processes that starts the app services in a Docker swarm.
+The following sequence describes how to start the application manually. We will
+also cover starting it using `docker-compose`. We will also cover orchestration
+using [Docker Swarm mode](https://docs.docker.com/engine/swarm/) and
+[Kubernetes](https://kubernetes.io/).
 
 ### Create a bridge network
 
@@ -174,7 +180,7 @@ You will need to build the image first:
 
 Then you can start it:
 
-    $ docker run -it --rm --network=bridgenet --name=voter voter <cmd>
+    $ docker run -it --rm --network=bridgenet -e=VOTE_API_HOST=vote --name=voter voter <cmd>
 
 where `<cmd>` is either `vote` or `results` (if you don't enter any command,
 then usage help will be printed to the terminal).
