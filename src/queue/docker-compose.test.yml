@@ -12,9 +12,9 @@ services:
     networks:
       - test_net
     depends_on:
-      - database
+      - queue
 
-  database:
-    image: mongo:3.6
+  queue:
+    image: redis:3.2
     networks:
       - test_net
