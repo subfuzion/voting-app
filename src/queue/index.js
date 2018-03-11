@@ -1,4 +1,5 @@
 module.exports = {
   Producer: require('./lib/Producer'),
-  Consumer: require('./lib/Consumer')
+  Consumer: require('./lib/Consumer'),
+  defaults: require('./lib/defaults')
 };
