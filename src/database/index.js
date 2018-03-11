@@ -1,4 +1,3 @@
 module.exports = {
-  Database: require('./lib/Database'),
-  defaults: require('./lib/defaults')
+  Database: require('./lib/Database')
 };

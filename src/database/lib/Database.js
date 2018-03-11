@@ -20,6 +20,14 @@ class Database {
   }
 
   /**
+   * Get a copy of the database defaults object
+   * @return {{}}
+   */
+  static get defaults() {
+    return Object.assign({}, defaults);
+  }
+
+  /**
    * Get a copy of the current config.
    * The config is an object with `host`, `port`, and `db` OR `uri` (or `url`) properties.
    * @return {{}|common.DefaultConfig}

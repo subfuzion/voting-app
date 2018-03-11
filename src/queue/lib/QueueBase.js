@@ -24,6 +24,14 @@ class QueueBase extends EventEmitter {
   }
 
   /**
+   * Get a copy of the database defaults object
+   * @return {{}}
+   */
+  static get defaults() {
+    return Object.assign({}, defaults);
+  }
+
+  /**
    * Return false until the quit method has been called, then true.
    * @return {boolean}
    */
