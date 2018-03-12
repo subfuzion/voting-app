@@ -8,7 +8,7 @@ services:
 
   sut:
     build: .
-    command: node_modules/mocha/bin/mocha --ui tdd test/test.js 
+    entrypoint: node_modules/mocha/bin/mocha --ui tdd test/test.js 
     networks:
       - test_net
     depends_on:
