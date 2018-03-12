@@ -1,5 +1,4 @@
 const assert = require('assert');
-const defaults = require('../lib/defaults');
 const Database = require('../lib/Database');
 const R = require('rambda');
 const shortid = require('shortid');
@@ -13,20 +12,13 @@ suite('database tests', function() {
 
     let db;
 
-    // the randomly generated database name used for testing
-    // (it will be dropped when testing finishes)
+    // randomly generated database name used for testing, dropped when finished
     let dbName = `testdb_${shortid.generate()}`;
 
     before(async () => {
-      // Get defaults values, then override from the environment (except for random dbName)
-      let config = defaults.Config;
-      config.db = dbName;
-
-      config.uri = process.env.MONGO_URI || config.uri;
-      if (!config.uri) {
-        config.host = process.env.HOST || config.host;
-        config.port = process.env.PORT || config.port;
-      }
+      // Create a standard config and override db
+      // (a standard config overrides defaults with values from the environment and finally any explicit values)
+      let config = Database.createStdConfig({ db: dbName });
 
       db = new Database(config);
       assert.equal(db.connectionURL, config.uri || `mongodb://${config.host}:${config.port}/${config.db}`);

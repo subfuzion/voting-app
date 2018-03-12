@@ -1,12 +1,13 @@
-const QueueBase = require('./QueueBase');
+const Queue = require('./Queue');
 
-class Producer extends QueueBase {
+class Producer extends Queue {
   /**
    * Create a new Producer with a connection to the queue.
-   * @param {object} [config] An object with host and port values.
+   * @param {object | string} [config] An object with host, port, and timeout properites or uri string.
+   * @param {object} [config] An object with Redis constructor properites.
    */
-  constructor(topic, config) {
-    super(topic, config);
+  constructor(topic, config, opts) {
+    super(topic, config, opts);
   }
 
   /**

@@ -7,26 +7,15 @@ networks:
 services:
 
   test:
-    build: .
-    command: node_modules/mocha/bin/mocha --ui tdd test/test.js 
+    image: worker_worker
+    entrypoint: node_modules/mocha/bin/mocha --ui tdd test/test.js 
     networks:
       - test_net
     depends_on:
-      - vote
-
-  vote:
-    build: .
-    environment:
-      - DATABASE_NAME=worker_test_db
-    networks:
-      - test_net
-    depends_on:
-      - database
-      - queue
       - worker
 
   worker:
-    build: ../worker
+    build: .
     environment:
       - DATABASE_NAME=worker_test_db
     networks:
@@ -34,14 +23,13 @@ services:
     depends_on:
       - queue
       - database
-
-  database:
-    image: mongo:3.4
-    networks:
-      - test_net
 
   queue:
     image: redis:3.2
     networks:
       - test_net
 
+  database:
+    image: mongo:3.6
+    networks:
+      - test_net

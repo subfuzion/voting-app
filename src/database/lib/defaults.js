@@ -1,8 +1,10 @@
-const Config = {
+const config = {
   host: 'database',
   port: 27017,
-  db: 'voting'
+  db: 'votes'
 };
 
-module.exports.Config = Config;
-
+// Exported objects are copies
+module.exports.config = () => {
+  return Object.assign({}, config);
+};

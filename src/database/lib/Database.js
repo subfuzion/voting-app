@@ -1,3 +1,4 @@
+const Backoff = require('./Backoff');
 const defaults = require('./defaults');
 const mongodb = require('mongodb');
 const uuid = require('uuid/v1');
@@ -15,7 +16,7 @@ class Database {
     this._client = null;
     this._instance = null;
     this._isConnected = false;
-    this._config = Object.assign(defaults.Config, config || {});
+    this._config = Object.assign(Database.defaults().config(), config || {});
     checkConfig(this._config);
   }
 
@@ -23,14 +24,45 @@ class Database {
    * Get a copy of the database defaults object
    * @return {{}}
    */
-  static get defaults() {
+  static defaults() {
     return Object.assign({}, defaults);
+  }
+
+  /**
+   * Creates a config object initialized with the defaults, then overridden the following
+   * environment variables, then finally overridden by any explicit props set by the 
+   * supplied config object.
+   * For environment variables, it checks first for DATABASE_URI and sets the uri property;
+   * else if not present, then checks for DATABASE_HOST and DATABASE_PORT and sets the
+   * host and port properties.
+   * @param {object} optional, a config object with properties that override all else.
+   * @returns {{}}
+   */
+  static createStdConfig(config) {
+    let c = Database.defaults().config();
+
+    if (process.env.DATABASE_URI) {
+      c.uri = process.env.DATABASE_URI;
+      delete c.host;
+    } else {
+      c.host = process.env.DATABASE_HOST || c.host;
+      c.port = process.env.DATABASE_PORT || c.port;
+    }
+    c.db = process.env.DATABASE_NAME || c.db;
+
+    // When connecting, we check first for a uri, so if the config object has explicitly
+    // specified host and port, then we need to explicitly delete the uri property.
+    if (config && config.host && config.port) {
+      delete c.uri;
+    }
+
+    return Object.assign(c, config || {});
   }
 
   /**
    * Get a copy of the current config.
    * The config is an object with `host`, `port`, and `db` OR `uri` (or `url`) properties.
-   * @return {{}|common.DefaultConfig}
+   * @return {{}}
    */
   get config() {
     return Object.assign({}, this._config);
@@ -83,9 +115,15 @@ class Database {
     if (this._isConnected) {
       throw new Error('Already connected');
     }
-    this._client = await Client.connect(this.connectionURL);
-    this._instance = await this._client.db(this.config.db);
-    this._isConnected = true;
+
+    let that = this;
+    let backoff = new Backoff(async () => {
+      that._client = await Client.connect(that.connectionURL);
+      that._instance = await that._client.db(that.config.db);
+      that._isConnected = true;
+    }, { retryIf: err => err.name == 'MongoNetworkError' });
+
+    await backoff.connect();
   }
 
   /**

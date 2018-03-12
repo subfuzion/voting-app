@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.post('/vote', async (req, res) => {
   try {
     console.log('POST /vote: %j', req.body);
-    let v = JSON.stringify(req.body);
+    let v = req.body;
     await producer.send(v);
     console.log('queued :', v);
     // for now, just return the request body as the result

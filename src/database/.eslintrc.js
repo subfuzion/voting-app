@@ -23,6 +23,9 @@ module.exports = {
             "error",
             { "checkLoops": false }
         ],
+        "no-return-await": [
+            "error"
+        ],
         "quotes": [
             "error",
             "single",

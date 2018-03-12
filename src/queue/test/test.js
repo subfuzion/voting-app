@@ -1,21 +1,15 @@
 const assert = require('assert');
 const Consumer = require('../lib/Consumer');
-const defaults = require('../lib/defaults');
 const Producer = require('../lib/Producer');
-const QueueBase = require('../lib/QueueBase');
+const Queue = require('../lib/Queue');
 const Redis = require('ioredis');
 
 const topic = 'queue';
 
 suite('queue tests', () => {
-  // Get default values, then override from the environment if variables are set
-  let config = defaults.Config;
-  config.uri = process.env.REDIS_URI || config.uri;
-  if (!config.uri) {
-    config.host = process.env.HOST || config.host;
-    config.port = process.env.PORT || config.port;
-  }
-  
+  // Create a standard config and override db
+  // (a standard config overrides defaults with values from the environment and finally any explicit values)
+  let config = Queue.createStdConfig();
   let opts = {};
 
   suite('basic redis tests', () => {
@@ -62,14 +56,14 @@ suite('queue tests', () => {
     });
 
     test('new connection successfully pings', async () => {
-      let conn = new QueueBase(topic, config, opts);
+      let conn = new Queue(topic, config, opts);
       let res = await conn.ping();
       assert.equal(res, 'PONG');
       await conn.quit();
     });
 
     test('using connection after quit throws an error', async () => {
-      let conn = new QueueBase(topic, config, opts);
+      let conn = new Queue(topic, config, opts);
       await conn.quit();
       try {
         await conn.ping();

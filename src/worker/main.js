@@ -3,25 +3,9 @@ const Database = require('@subfuzion/database').Database;
 
 // set queue connection timeout to 0 since we want the worker queue
 // consumer to block indefinitely while waiting for messages
-let queueOptions = {
-  timeout: 0
-};
-let queueUri;
+let queueConfig = Consumer.createStdConfig({ timeout: 0 });
 
-if (process.env.REDIS_URI) {
-  queueUri = process.env.REDIS_URI;
-} else {
-  queueOptions.host = process.env.REDIS_HOST || process.env.QUEUE_HOST || 'queue';
-  queueOptions.port = process.env.QUEUE_PORT || 6379;
-}
-
-let databaseOptions = {};
-if (process.env.MONGO_URI) {
-  databaseOptions.uri = process.env.MONGO_URI;
-} else {
-  databaseOptions.host = process.env.DATABASE_HOST || 'database';
-  databaseOptions.port = process.env.DATABASE_PORT || 27017;
-}
+let databaseConfig = Database.createStdConfig();
 
 let consumer, db, quitting = false;
 
@@ -50,11 +34,11 @@ async function init() {
   try {
     console.log('worker initializing');
 
-    db = new Database(databaseOptions);
+    db = new Database(databaseConfig);
     await db.connect();
     console.log('connected to database');
 
-    consumer = queueUri ? (new Consumer('queue', queueUri, queueOptions)) : (new Consumer('queue', queueOptions));
+    consumer = new Consumer('queue', queueConfig);
     consumer.on('error', err => {
       console.log(err.message);
       process.exit(1);
@@ -98,7 +82,7 @@ async function quit() {
   }
 }
 
-// start worker
+// main: start worker and run until signalled
 (async () => {
   try {
     await init();
@@ -106,6 +90,7 @@ async function quit() {
     while (true) {
       try {
         let msg = await consumer.receive();
+        if (!msg) continue;
         console.log('message received: ', msg);
         let json = JSON.parse(msg);
         let res = await db.updateVote(json);

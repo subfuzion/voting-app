@@ -2,17 +2,16 @@
 # yarn lockfile v1
 
 
-"@subfuzion/database@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.0.7.tgz#118031b92083402c6a4c92715a0245291f28b0b4"
+"@subfuzion/database@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.2.0.tgz#62effbaddaf8e8db4cb05238ba56064d4c8cd4ca"
   dependencies:
     mongodb "^3.0.3"
-    shortid "^2.2.8"
     uuid "^3.1.0"
 
-"@subfuzion/queue@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.4.6.tgz#de84221e3b3a3661298f2d48363be81c91135ea3"
+"@subfuzion/queue@1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@subfuzion/queue/-/queue-1.5.5.tgz#f92b50e82dadfb8f88f334c46b27e4a3d5bbfa11"
   dependencies:
     ioredis "^3.2.2"
     uuid "^3.2.1"
@@ -290,10 +289,6 @@ resolve-from@^2.0.0:
 semver@^5.1.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
-
-shortid@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.8.tgz#033b117d6a2e975804f6f0969dbe7d3d0b355131"
 
 supports-color@4.4.0:
   version "4.4.0"

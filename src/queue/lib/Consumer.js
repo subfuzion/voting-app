@@ -1,15 +1,16 @@
-const QueueBase = require('./QueueBase');
+const Queue = require('./Queue');
 
 // redis timeout is in seconds
 const DefaultTimeout = 2;
 
-class Consumer extends QueueBase {
+class Consumer extends Queue {
   /**
    * Create a new Consumer with a connection to the queue.
-   * @param {object} [config] An object with host, port, and timeout properites.
+   * @param {object | string} [config] An object with host, port, and timeout properites or uri string.
+   * @param {object} [config] An object with Redis constructor properites.
    */
-  constructor(topic, config) {
-    super(topic, config);
+  constructor(topic, config, opts) {
+    super(topic, config, opts);
   }
 
   get timeout() {
