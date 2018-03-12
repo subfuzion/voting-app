@@ -31,22 +31,66 @@ Run in this directory:
 
     $ docker-compose up
 
+You can test it with the `voter` CLI:
+
+```
+$ docker run -it --rm --network=host subfuzion/voter vote
+? What do you like better? (Use arrow keys)
+  (quit)
+❯ cats
+  dogs
+```
+
+You can print voting results:
+
+```
+$ docker run -it --rm --network=host subfuzion/voter results
+Total votes -> cats: 4, dogs: 0 ... CATS WIN!
+```
+
+When you are finished:
+
+Press `Ctrl-C` to stop the stack, then enter:
+
+    $ docker-compose -f docker-compose.yml rm -f
+
+### Docker Swarm
+
 You can also run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/).
 If you haven't initialized one yet, run:
 
     $ docker swarm init
 
-Once you have your swarm, then run:
+Once you have initialized a swarm, then deploy the stack:
 
     $ docker stack deploy --compose-file docker-stack.yml vote
+
+You can test it the same way as described for docker-compose. When finished, you
+can stop the stack by entering:
+
+    $ docker stack rm vote
+
+### Kubernetes
+
+Kubernetes and Helm chart support has been added to the repo. Instructions coming
+soon.
+
+### Docker Cloud
+
+Coming soon.
+
+### Amazon ECS with Fargate
+
+[Deploy to ECS with Fargate](https://github.com/subfuzion/docker-voting-app-nodejs/wiki/Deploying-the-Docker-Voting-App-using-AWS-Fargate)
 
 ## About the Voting App
 
 This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
 The original app is a great demonstration of how Docker can be used to containerize any
-process of a modern application regardless of the programming language used and runtime environment
-needed for each one. From a devops perspective, this is a compelling example of Docker's benefits.
+process of a modern polyglot application regardless of the programming language used and
+runtime environment needed for each one. From a devops perspective, this is a compelling
+example of Docker's benefits.
 
 However, if you are a developer who is also interested in hacking on the application a bit to experiment
 with it as well as to extend your knowledge around Docker, then the use of so many different languages can pose
