@@ -9,6 +9,8 @@ services:
   sut:
     image: worker
     entrypoint: node_modules/mocha/bin/mocha --ui tdd test/test.js 
+    environment:
+      - DATABASE_NAME=worker_test_db
     networks:
       - test_net
     depends_on:
@@ -22,15 +24,15 @@ services:
     networks:
       - test_net
     depends_on:
-      - queue
       - database
-
-  queue:
-    image: redis:3.2
-    networks:
-      - test_net
+      - queue
 
   database:
     image: mongo:3.6
+    networks:
+      - test_net
+
+  queue:
+    image: redis:3.2
     networks:
       - test_net

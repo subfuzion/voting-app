@@ -1,8 +1,8 @@
 const app = require('commander');
+const axios = require('axios');
 const format = require('util').format;
 const inquirer = require('inquirer');
 const pkg = require('./package.json');
-const request = require('r2');
 
 let apiOptions = {
   host: process.env.VOTE_API_HOST || 'localhost',
@@ -17,6 +17,10 @@ if (uri && !uri.endsWith('/')) {
 let apiURL = uri ? uri : `http://${apiOptions.host}:${apiOptions.port}/`;
 let voteURL = apiURL + 'vote/';
 let resultsURL = apiURL + 'results/';
+
+let ax = axios.create({
+  baseURL: apiURL
+});
 
 /**
  * Log error message. Print 'error:' followed by remaining arguments,
@@ -66,8 +70,11 @@ async function doVoteCmd(cmd, opts) {
 
   try {
     // otherwise submit the answer to vote
-    let res = await request.post(voteURL, { json: a }).json;
-    console.log(voteToString(res.result));
+    let res = await ax.post(voteURL, a);
+    if (!res.data.success) {
+      exit(1, 'command "vote" %s', res.data.reason);
+    }
+    console.log(voteToString(res.data.result));
   } catch (err) {
     exit(1, 'command "vote" %s', err.message);
   }
@@ -77,8 +84,11 @@ async function doVoteCmd(cmd, opts) {
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 async function doResultsCmd(cmd, opts) {
   try {
-    let res = await request.get(resultsURL).json;
-    console.log(tallyToString(res.result));
+    let res = await ax.get(resultsURL);
+    if (!res.data.success) {
+      exit(1, 'command "vote" %s', res.data.reason);
+    }
+    console.log(tallyToString(res.data.result));
   } catch (err) {
     exit(1, 'command "results" %s', err.message);
   }

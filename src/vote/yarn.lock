@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@subfuzion/database@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.2.0.tgz#62effbaddaf8e8db4cb05238ba56064d4c8cd4ca"
+"@subfuzion/database@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@subfuzion/database/-/database-1.2.1.tgz#ca654fd7a61e9b3ddc5fb585ccf2b4164004e66e"
   dependencies:
     mongodb "^3.0.3"
     uuid "^3.1.0"

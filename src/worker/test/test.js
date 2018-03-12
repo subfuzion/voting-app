@@ -8,11 +8,7 @@ suite('queue tests', () => {
   let producer;
 
   // database configuration
-  // randomly generated database name used for testing, dropped when finished
-  // keep the name in sync with the environment variable supplied to the worker in
-  // docker-compose.test.yml
-  let dbName = 'worker_test_db';
-  let dbConfig = Database.createStdConfig({ db: dbName });
+  let dbConfig = Database.createStdConfig();
   let db;
 
   // let db;
@@ -55,7 +51,7 @@ suite('queue tests', () => {
     }
 
     before(async function() {
-      this.timeout(10 * 1000);
+      this.timeout(15 * 1000);
 
       votes.forEach(async v => {
         await producer.send(v);
@@ -63,7 +59,7 @@ suite('queue tests', () => {
 
       // now we need to pause a while to make sure the worker has had time to
       // process the queue before we run database queries
-      await pause(5 * 1000);
+      await pause(10 * 1000);
     });
 
     test('tally votes', async() => {
