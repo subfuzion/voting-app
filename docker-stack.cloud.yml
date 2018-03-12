@@ -1,0 +1,45 @@
+version: "3.6"
+
+services:
+
+  database:
+    image: mongo:3.6
+    networks:
+      - backend
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  queue:
+    image: redis:3.2
+    networks:
+      - backend
+
+  worker:
+    image: subfuzion/vote-worker
+    networks:
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  vote:
+    image: subfuzion/vote-api
+    ports:
+      - 80:3000
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
