@@ -7,7 +7,7 @@ networks:
 services:
 
   sut:
-    build: .
+    image: vote
     entrypoint: node_modules/mocha/bin/mocha --ui tdd test/test.js 
     networks:
       - test_net
@@ -16,6 +16,7 @@ services:
 
   vote:
     build: .
+    image: vote
     environment:
       - DATABASE_NAME=worker_test_db
     networks:
@@ -26,7 +27,7 @@ services:
       - worker
 
   worker:
-    build: ../worker
+    image: subfuzion/vote-worker
     environment:
       - DATABASE_NAME=worker_test_db
     networks:
