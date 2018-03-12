@@ -1,7 +1,7 @@
 #/bin/sh
 set -e
 
-pkgs="database queue worker vote voter"
+pkgs="database queue"
 
 cd src
 for p in $pkgs; do
