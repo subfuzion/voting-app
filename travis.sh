@@ -7,8 +7,7 @@ cd src
 for p in $pkgs; do
     echo "test: $p"
     cd $p
-    yarn
-    npm test
+    docker-compose -f docker-compose.test.yml up
     cd ..
 done
 

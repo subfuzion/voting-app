@@ -2,11 +2,9 @@ language: node_js
 node_js:
   - "8"
 
-#sudo: required
+sudo: required
 services:
-#  - docker
-  - mongodb
-  - redis
+  - docker
 
 script: ./travis.sh
 
