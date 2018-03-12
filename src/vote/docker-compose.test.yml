@@ -6,7 +6,7 @@ networks:
 
 services:
 
-  test:
+  sut:
     build: .
     command: node_modules/mocha/bin/mocha --ui tdd test/test.js 
     networks:
