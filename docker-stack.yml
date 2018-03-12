@@ -3,7 +3,7 @@ version: "3.6"
 services:
 
   database:
-    image: mongo:3.4
+    image: mongo:3.6
     networks:
       - backend
     volumes:
@@ -18,9 +18,6 @@ services:
     image: worker
     networks:
       - backend
-    depends_on:
-      - queue
-      - database
     deploy:
       mode: replicated
       replicas: 2
@@ -34,9 +31,6 @@ services:
     networks:
       - frontend
       - backend
-    depends_on:
-      - queue
-      - database
     deploy:
       mode: replicated
       replicas: 2
