@@ -84,54 +84,7 @@ Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/docker-voting-app-
 
 This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
-### Goals
-
-The goal is to provide a demonstration and orientation to Docker, covering a
-range of concepts and tasks for building, deploying and monitoring an application.
-
-Orchestration concepts and tasks will also be showcased here, including the use of
-[Docker Swarm mode](https://docs.docker.com/engine/swarm/) and
-[Kubernetes](https://kubernetes.io/).
-
-Real world production concerns, such as monitoring, rolling updates, etc., will also be introduced.
-
-Finally, the application will be used to demonstrate evolving Cloud-native concepts,
-such as service meshes.
-
-## Introduction to Docker Course
-
-The app will be used for an introductory course called **Software Containerization
-with Docker for Developers**.
-
-The course will be offered through the [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program, available on [Coursera](https://www.coursera.org/) sometime in spring of 2018.
-
-See the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki) for more
-detail about course modules.
-
-### Rationale for this implementation
-
-The original app is a great demonstration of how Docker can be used to containerize
-any process of a modern polyglot application, regardless of the programming language
-used and runtime environment needed for each one. From a devops perspective, this is
-a compelling example of Docker's benefits.
-
-However, if you are a developer who is also interested in hacking on the application
-a bit to experiment with it as well as to extend your knowledge around Docker, then
-the use of so many different languages can pose a slight barrier. This version of the
-app has been developed to support an introductory course on Docker and is meant to be
-slighly easier to hack on for just that reason.
-
-It's hard to pick a single language that will please everyone. The decision was made
-to settle on [Node.js](https://nodejs.org/) due to its popularity for API development and because of the number of programmers who have had some exposure to [JavaScript](https://www.javascript.com/).
-
-While JavaScript has its quirks, the code for the various packages in this example
-are written using the latest EcmaScript support that is available in LTS (`8.0+`) and
-later versions of Node (See [node.green](http://node.green/)). In particular, the use
-of [async functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) should make control flow somewhat easier to follow for developers not as familiar with Node asynchronous
-callback conventions.
-
-As modest as the app is in terms of actual functionality (it only supports casting
-votes and querying the vote tally), it has nevertheless been designed to reflect principles of modern [12-Factor Apps](https://12factor.net/) well suited to showcasing Docker's benefits.
+For more information, please see the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki).
 
 ## License
 
