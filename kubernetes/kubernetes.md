@@ -55,7 +55,7 @@ svc/vote         ClusterIP   10.109.15.94    <none>        3000/TCP    9s
 You can now vote:
 
 ```
-$ kubectl run voter --rm -i --tty --image voter --image-pull-policy=IfNotPresent -- vote
+$ kubectl run voter --rm -i --tty --image subfuzion/voter --image-pull-policy=IfNotPresent -- vote
 If you don't see a command prompt, try pressing enter.
 ? What do you like better?
 ❯ (quit)
@@ -66,7 +66,7 @@ If you don't see a command prompt, try pressing enter.
 
 You can check the vote results:
 ```
-$ kubectl run voter --rm -i --tty --image voter --image-pull-policy=IfNotPresent -- results
+$ kubectl run voter --rm -i --tty --image subfuzion/voter --image-pull-policy=IfNotPresent -- results
 If you don't see a command prompt, try pressing enter.
 Total votes -> cats: 0, dogs: 1 ... DOGS WIN!
 ```
@@ -89,8 +89,6 @@ docker tag vote:latest gcr.io/$PROJECT_ID/vote:latest
 gcloud docker -- push gcr.io/$PROJECT_ID/vote:latest
 docker tag worker:latest gcr.io/$PROJECT_ID/worker:latest
 gcloud docker -- push gcr.io/$PROJECT_ID/worker:latest
-docker tag voter:latest gcr.io/$PROJECT_ID/voter:latest
-gcloud docker -- push gcr.io/$PROJECT_ID/voter:latest
 ```
 
 You'll then have to modify the worker-deployment.yml and vote-deployment.yml files to replace the name of the image by the tagged one.
@@ -172,7 +170,7 @@ curl 35.227.221.249
 You can now vote using the IP address of the ingress and port 80:
 
 ```
-$ docker run -it --rm -e VOTE_API_HOST=35.227.221.249 -e VOTE_API_PORT=80 voter vote
+$ docker run -it --rm -e VOTE_API_HOST=35.227.221.249 -e VOTE_API_PORT=80 subfuzion/voter vote
 ? What do you like better?
 ❯ (quit)
   cats
@@ -181,7 +179,7 @@ $ docker run -it --rm -e VOTE_API_HOST=35.227.221.249 -e VOTE_API_PORT=80 voter 
 
 You can check the vote results:
 ```
-$ docker run -it --rm -e VOTE_API_HOST=35.227.221.249 -e VOTE_API_PORT=80 voter results
+$ docker run -it --rm -e VOTE_API_HOST=35.227.221.249 -e VOTE_API_PORT=80 subfuzion/voter results
 Total votes -> cats: 0, dogs: 1 ... DOGS WIN!
 ```
 

@@ -16,7 +16,7 @@ Queue:
   ContainerPort: 6379
 Vote:
   Name: vote
-  Image: "vote"
+  Image: "subfuzion/vote-api"
   ImageTag: "latest"
   Replicas: 1
   Component: "vote"
@@ -24,7 +24,7 @@ Vote:
   ContainerPort: 3000
 Worker:
   Name: worker
-  Image: "worker"
+  Image: "subfuzion/vote-worker"
   ImageTag: "latest"
   Replicas: 1
   Component: "worker"
