@@ -86,6 +86,16 @@ This app is based on the original [Docker](https://docker.com) [Example Voting A
 
 For more information, please see the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki).
 
+## Introduction to Docker Course
+
+The app will be used for an introductory course called **Software Containerization
+with Docker for Developers**.
+
+The course will be offered through the [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program, available on [Coursera](https://www.coursera.org/) sometime in the spring of 2018.
+
+See the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki) for more
+detail about course modules.
+
 ## License
 
 The Voting App is open source and free for any use in compliance with the terms of the
