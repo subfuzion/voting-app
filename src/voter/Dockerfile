@@ -7,7 +7,6 @@ COPY package.json /usr/src/app/
 RUN yarn
 COPY . /usr/src/app
 
-#FROM node:9-slim
 FROM mhart/alpine-node:base-9
 ARG NODE_ENV
 ENV NODE_ENV ${NODE_ENV:-development
