@@ -7,7 +7,7 @@ networks:
 services:
 
   database:
-    image: mongo:3.4
+    image: mongo:3.6
     networks:
       - bridge_net
 
