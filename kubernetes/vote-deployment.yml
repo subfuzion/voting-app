@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
         - name: vote
-          image: vote
-          imagePullPolicy: IfNotPresent
+          image: subfuzion/vote-api
           ports:
           - containerPort: 3000
           env:

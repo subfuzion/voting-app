@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: worker
-        imagePullPolicy: IfNotPresent
+        image: subfuzion/vote-worker
         env:
         - name: DATABASE_HOST
           value: "database.default.svc.cluster.local"
