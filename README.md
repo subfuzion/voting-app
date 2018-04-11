@@ -70,13 +70,13 @@ can stop the stack by entering:
 Kubernetes and Helm chart support has been added to the repo. Instructions coming
 soon.
 
-### Docker Cloud
-
-Coming soon.
-
 ### Amazon ECS with Fargate
 
 Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/docker-voting-app-nodejs/wiki/Deploy-the-Docker-Voting-App-to-AWS-ECS-with-Fargate)
+
+### GKE
+
+Coming soon.
 
 ## About the Voting App
 
