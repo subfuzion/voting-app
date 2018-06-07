@@ -22,3 +22,4 @@ spec:
         image: "{{ .Values.Database.Image }}:{{ .Values.Database.ImageTag }}"
         ports:
         - containerPort: {{ .Values.Database.ContainerPort }}
+          name: {{ .Values.Database.ContainerPortName }}

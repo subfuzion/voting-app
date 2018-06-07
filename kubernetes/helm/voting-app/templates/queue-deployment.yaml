@@ -22,6 +22,7 @@ spec:
         image: "{{ .Values.Queue.Image }}:{{ .Values.Queue.ImageTag }}"
         ports:
         - containerPort: {{ .Values.Queue.ContainerPort }}
+          name: {{ .Values.Queue.ContainerPortName }}
         readinessProbe:
           exec:
             command:
