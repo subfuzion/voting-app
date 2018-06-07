@@ -6,6 +6,7 @@ Database:
   Component: "database"
   ServicePort: 27017
   ContainerPort: 27017
+  ContainerPortName: database
 Queue:
   Name: queue
   Image: "redis"
@@ -14,14 +15,17 @@ Queue:
   Component: "queue"
   ServicePort: 6379
   ContainerPort: 6379
+  ContainerPortName: queue
 Vote:
   Name: vote
   Image: "subfuzion/vote-api"
   ImageTag: "latest"
   Replicas: 1
   Component: "vote"
-  ServicePort: 3000
+  ServicePort: 80
+  ServiceType: LoadBalancer
   ContainerPort: 3000
+  ContainerPortName: vote
 Worker:
   Name: worker
   Image: "subfuzion/vote-worker"

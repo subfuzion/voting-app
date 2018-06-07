@@ -8,9 +8,9 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 spec:
-  type: NodePort
+  type: {{ .Values.Vote.ServiceType }}
   selector:
     app: vote
   ports:
   - port: {{ .Values.Vote.ServicePort }}
-    targetPort: {{ .Values.Vote.ContainerPort }}
+    targetPort: {{ .Values.Vote.ContainerPortName }}

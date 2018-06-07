@@ -12,4 +12,4 @@ spec:
     app: database
   ports:
   - port: {{ .Values.Database.ServicePort }}
-    targetPort: {{ .Values.Database.ContainerPort }}
+    targetPort: {{ .Values.Database.ContainerPortName }}

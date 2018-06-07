@@ -23,6 +23,7 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: {{ .Values.Vote.ContainerPort }}
+            name: {{ .Values.Vote.ContainerPortName }}
           env:
           - name: DATABASE_HOST
             value: "database.default.svc.cluster.local"
