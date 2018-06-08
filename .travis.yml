@@ -1,3 +1,7 @@
+branches:
+  only:
+    master
+
 language: node_js
 node_js:
   - "8"
@@ -7,4 +11,3 @@ services:
   - docker
 
 script: ./travis.sh
-
