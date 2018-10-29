@@ -92,7 +92,6 @@ suite('database tests', function() {
         await db.updateVote({ vote: 'b' });
       }, count_b);
 
-
       let tally = await db.tallyVotes();
       assert.ok(tally);
       assert.equal(tally.a, count_a, `'a' => expected: ${count_a}, actual: ${tally.a}`);
