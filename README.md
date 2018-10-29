@@ -74,10 +74,6 @@ soon.
 
 Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/docker-voting-app-nodejs/wiki/Deploy-the-Docker-Voting-App-to-AWS-ECS-with-Fargate)
 
-### GKE
-
-Coming soon.
-
 ## About the Voting App
 
 ![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-arch-1.png)
