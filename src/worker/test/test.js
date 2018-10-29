@@ -57,9 +57,9 @@ suite('queue tests', () => {
         await producer.send(v);
       });
 
-      // now we need to pause a while to make sure the worker has had time to
+      // pause a bit to give the worker process time to
       // process the queue before we run database queries
-      await pause(10 * 1000);
+      await pause(2 * 1000, 'let the worker process the queue before querying the database');
     });
 
     test('tally votes', async() => {
@@ -73,9 +73,9 @@ suite('queue tests', () => {
 
 });
 
-async function pause(ms) {
+async function pause(ms, reason) {
   return new Promise(resolve => {
-    console.warn(`pausing for ${ms} ms...`);
+    console.warn(`pausing for ${ms} ms...${reason}`);
     setTimeout(resolve, ms);
   });
 }
