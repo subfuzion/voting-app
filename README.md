@@ -12,8 +12,8 @@
 
 | Node.js Packages    | npm                    | Build Status |
 |:--------------------|:-----------------------|:------------ |
-| @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
-| @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/docker-voting-app-nodejs.svg)](https://travis-ci.org/subfuzion/docker-voting-app-nodejs)
+| @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/voting-app.svg)](https://travis-ci.org/subfuzion/voting-app)
+| @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/voting-app.svg)](https://travis-ci.org/subfuzion/voting-app)
 
 ## Quick Start
 
@@ -72,15 +72,15 @@ soon.
 
 ### Amazon ECS with Fargate
 
-Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/docker-voting-app-nodejs/wiki/Deploy-the-Docker-Voting-App-to-AWS-ECS-with-Fargate)
+Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/voting-app/wiki/Deploy-the-Docker-Voting-App-to-AWS-ECS-with-Fargate)
 
 ## About the Voting App
 
-![Voting app architecture](https://raw.githubusercontent.com/subfuzion/docker-ucdavis-coursera/master/images/voting-app-arch-1.png)
+![Voting app architecture](https://raw.githubusercontent.com/subfuzion/voting-app/master/images/voting-app-arch-1.1.png)
 
 This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
-For more information, please see the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki).
+For more information, please see the [wiki](https://github.com/subfuzion/voting-app/wiki).
 
 ## Introduction to Docker Course
 
@@ -95,5 +95,5 @@ detail about course modules.
 ## License
 
 The Voting App is open source and free for any use in compliance with the terms of the
-[MIT License](https://github.com/subfuzion/docker-voting-app-nodejs/blob/master/LICENSE).
+[MIT License](https://github.com/subfuzion/voting-app/blob/master/LICENSE).
 
