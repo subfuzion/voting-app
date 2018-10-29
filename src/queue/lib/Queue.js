@@ -62,7 +62,7 @@ class Queue extends EventEmitter {
    * For environment variables, it checks first for QUEUE_URI and sets the uri property;
    * else if not present, then checks for QUEUE_HOST and QUEUE_PORT and sets the
    * host and port properties.
-   * @param {object} optional, a config object with properties that override all else.
+   * @param {object} config, a configuration object with properties that override all else.
    * @returns {{}}
    */
   static createStdConfig(config) {

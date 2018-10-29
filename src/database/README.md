@@ -92,7 +92,9 @@ There is a Database helper static method that will create the configuration that
 environment variables:
 
 ```js
-let config = Database.createStdConfig();
+let defaults = {};
+// explicit defaults will override environment variables, environment overrides internal defaults
+let config = Database.createStdConfig(defaults);
 let db = new Database(config);
 await db.connect();
 ```
@@ -124,6 +126,14 @@ var db = new Database([options])
 let tally = await db.tallyVotes()
 // tally is an object: { a: <number>, b: <number> }
 // when finished with the database
+await db.close()
+```
+
+### Closing Connections
+
+You should close the database connection when finished.
+
+```js
 await db.close()
 ```
 

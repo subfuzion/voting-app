@@ -5,7 +5,7 @@
 FROM node:9 as build
 
 ARG NODE_ENV
-ENV NODE_ENV ${NODE_ENV:-development
+ENV NODE_ENV ${NODE_ENV:-development}
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
