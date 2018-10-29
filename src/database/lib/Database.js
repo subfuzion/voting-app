@@ -5,6 +5,9 @@ const uuid = require('uuid/v1');
 
 const Client = mongodb.MongoClient;
 
+// The `votes` collection
+const VOTES = 'votes';
+
 class Database {
   /**
    * Create a new Database instance.
@@ -35,7 +38,7 @@ class Database {
    * For environment variables, it checks first for DATABASE_URI and sets the uri property;
    * else if not present, then checks for DATABASE_HOST and DATABASE_PORT and sets the
    * host and port properties.
-   * @param {object} optional, a config object with properties that override all else.
+   * @param {object} config, a configuration object with properties that override all else.
    * @returns {{}}
    */
   static createStdConfig(config) {
@@ -118,10 +121,11 @@ class Database {
 
     let that = this;
     let backoff = new Backoff(async () => {
-      that._client = await Client.connect(that.connectionURL);
+      let opts = { useNewUrlParser: true };
+      that._client = await Client.connect(that.connectionURL, opts);
       that._instance = await that._client.db(that.config.db);
       that._isConnected = true;
-    }, { retryIf: err => err.name == 'MongoNetworkError' });
+    }, { retryIf: err => err.name === 'MongoNetworkError' });
 
     await backoff.connect();
   }
@@ -157,7 +161,7 @@ class Database {
       vote.voter_id = uuid();
     }
 
-    let col = await this.instance.collection('votes');
+    let col = await this.instance.collection(VOTES);
     let result = await col.findOneAndUpdate({ voter_id: vote.voter_id },
       { $set: { vote: vote.vote }},
       { returnOriginal: false, sort: [['voter_id',1]], upsert: true });
@@ -172,9 +176,9 @@ class Database {
    * @return {Promise<{a: number, b: number}>}
    */
   async tallyVotes() {
-    let col = await this.instance.collection('votes');
-    let count_a = await col.count({ vote: 'a' });
-    let count_b = await col.count({ vote: 'b' });
+    let col = await this.instance.collection(VOTES);
+    let count_a = await col.countDocuments({ vote: 'a' });
+    let count_b = await col.countDocuments({ vote: 'b' });
     return {
       a: count_a,
       b: count_b

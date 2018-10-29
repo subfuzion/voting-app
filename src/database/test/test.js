@@ -53,10 +53,10 @@ suite('database tests', function() {
 
       try {
         await db.updateVote(v);
-        throw new Error('Expected an error for bad vote (missing vote property)');
       } catch (err) {
+        // expected error starts with 'Invalid vote'
         if (!err.message.startsWith('Invalid vote')) {
-          // rethrow unexpected error
+            // otherwise rethrow unexpected error
           throw err;
         }
       }
@@ -70,17 +70,16 @@ suite('database tests', function() {
 
       try {
         await db.updateVote(v);
-        throw new Error('Expected an error for invalid vote (bad value for vote');
       } catch (err) {
+        // expected error starts with 'Invalid vote'
         if (!err.message.startsWith('Invalid vote')) {
-          // rethrow unexpected error
+          // otherwise rethrow unexpected error
           throw err;
         }
       }
     });
 
     test('tally votes', async () => {
-
       // note: the total includes 1 vote for 'a' from a previous test, so
       // account for that by adding one less than the total
       let count_a = 4;
