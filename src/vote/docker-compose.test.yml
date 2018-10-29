@@ -3,7 +3,12 @@ version: '2.4'
 networks:
   test_net:
     driver: bridge
-
+  votes_net:
+    driver: bridge
+  reports_net:
+    driver: bridge
+  db_net:
+    driver: bridge
 services:
 
   sut:
@@ -13,6 +18,7 @@ services:
       - DATABASE_NAME=vote_test_db
     networks:
       - test_net
+      - db_net
     depends_on:
       - vote
 
@@ -23,19 +29,40 @@ services:
       - DATABASE_NAME=vote_test_db
     networks:
       - test_net
-    ports:
-      - "3000:3000"
+      - votes_net
+      - reports_net
     depends_on:
-      - database
+      - votes
+      - reports
+
+  votes:
+    image: subfuzion/vote-votes
+    environment:
+      - DATABASE_NAME=vote_test_db
+    networks:
+      - votes_net
+      - db_net
+    depends_on:
       - queue
       - worker
+
+  reports:
+    image: subfuzion/vote-reports
+    environment:
+      - DATABASE_NAME=vote_test_db
+    networks:
+      - reports_net
+      - db_net
+    depends_on:
+      - database
 
   worker:
     image: subfuzion/vote-worker
     environment:
       - DATABASE_NAME=vote_test_db
     networks:
-      - test_net
+      - votes_net
+      - db_net
     depends_on:
       - database
       - queue
@@ -43,9 +70,10 @@ services:
   database:
     image: mongo:3.6
     networks:
-      - test_net
+      - db_net
 
   queue:
     image: redis:3.2
     networks:
-      - test_net
+      - votes_net
+

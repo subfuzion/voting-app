@@ -8,7 +8,6 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 
-
 let queueConfig = Producer.createStdConfig();
 let databaseConfig = Database.createStdConfig();
 
@@ -36,19 +35,6 @@ app.post('/vote', async (req, res) => {
     res.send({ success: true, result: req.body });
   } catch (err) {
     console.log('ERROR: POST /vote: %j', err);
-    res.send(500, { success: false, reason: err.message });
-  }
-});
-
-// results route handler
-app.get('/results', async (req, res) => {
-  try {
-    console.log('GET /results');
-    let result = await db.tallyVotes();
-    console.log('results: %j', result);
-    res.send({ success: true, result: result });
-  } catch (err) {
-    console.log('ERROR GET /results: %j', err);
     res.send(500, { success: false, reason: err.message });
   }
 });

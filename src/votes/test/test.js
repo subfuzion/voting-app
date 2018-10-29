@@ -27,9 +27,7 @@ suite('vote tests', () => {
     }
 
     // post votes
-    votes.forEach(async v => {
-      await votesAPI.post('/vote', v);
-    });
+    await Promise.all(votes.map(vote => votesAPI.post('/vote', vote)));
 
     // pause a bit to give the worker process time to
     // process the queue before we run database queries

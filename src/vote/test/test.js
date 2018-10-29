@@ -3,7 +3,7 @@ const axios = require('axios');
 const Database = require('@subfuzion/database').Database;
 
 suite('vote tests', () => {
-  let ax = axios.create({
+  let voteAPI = axios.create({
     baseURL: 'http://vote:3000/'
   });
 
@@ -13,6 +13,9 @@ suite('vote tests', () => {
   before(async function() {
     this.timeout(10 * 1000);
 
+    await pause(2 * 1000, 'wait for environment to be stable');
+
+    // initialize test votes
     let votes = [];
     for (let i = 0; i < votes_a; i++) {
       votes.push({ vote: 'a' });
@@ -21,16 +24,19 @@ suite('vote tests', () => {
       votes.push({ vote: 'b' });
     }
 
-    votes.forEach(async v => {
-      await ax.post('/vote', v);
-    });
+    // post votes
+    await Promise.all(votes.map(async (vote) => {
+      let resp = await voteAPI.post('/vote', vote);
+      console.log(resp.data);
+    }));
 
-    // now we need to pause a while to make sure the worker has had time to
+    // pause a bit to give the worker process time to
     // process the queue before we run database queries
-    await pause(5 * 1000);
+    await pause(2 * 1000, 'let the worker service have time to process the queue before querying the reports service');
   });
 
   after(async () => {
+    // for clean up, drop database created using the test environment
     let dbConfig = Database.createStdConfig();
     let db = new Database(dbConfig);
     await db.connect();
@@ -39,7 +45,7 @@ suite('vote tests', () => {
   });
 
   test('tally votes', async() => {
-    let resp = await ax.get('/results');
+    let resp = await voteAPI.get('/results');
     assert.ok(resp.data.success);
     let tally = resp.data.result;
     assert.equal(tally.a, votes_a, `'a' => expected: ${votes_a}, actual: ${tally.a}`);
@@ -48,9 +54,9 @@ suite('vote tests', () => {
 
 });
 
-async function pause(ms) {
+async function pause(ms, reason) {
   return new Promise(resolve => {
-    console.warn(`pausing for ${ms} ms...`);
+    console.warn(`pausing for ${ms} ms...${reason}`);
     setTimeout(resolve, ms);
   });
 }
