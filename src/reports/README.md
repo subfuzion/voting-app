@@ -1,24 +1,6 @@
-## Vote API
+## Reports API
 
-### POST /vote
-
-This endpoint is used to cast a vote.
-
-#### Request Body
-
-`application/json`
-
-##### Schema
-
-* `vote` - `string`; currently restricted to either "a" or "b"
-
-##### Example
-
-```
-{
-  "vote": "a"
-}
-```
+Reports service for the Voting App.
 
 ### GET /results
 
@@ -45,3 +27,4 @@ This endpoint is used to query the voting results.
   }
 }
 ```
+
