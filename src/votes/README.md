@@ -1,30 +1,24 @@
-## Reports API
+## Votes API
 
-Reports service for the Voting App.
+Votes service for the Voting App.
 
-### GET /results
+### POST /vote
 
-This endpoint is used to query the voting results.
+This endpoint is used to cast a vote.
 
-#### Response
+#### Request Body
 
 `application/json`
 
-* `success` - `boolean`
+##### Schema
 
-* `result` - `object`; present only if success. The object has a property named for each vote ("a", "b"); the value of the property is a `number` corresponding to the number of votes cast.
+* `vote` - `string`; currently restricted to either "a" or "b"
 
-* `reason` - `string`; present only if success is false.
-
-#### Example:
+##### Example
 
 ```
 {
-  "success": true,
-  "result": {
-    "a": 5,
-    "b": 3
-  }
+  "vote": "a"
 }
 ```
 
@@ -51,5 +45,4 @@ To view logs, run:
 When finished with tests, run:
 
     $ docker-compose -f ./docker-compose.test.yml down
-
 

@@ -7,33 +7,40 @@ networks:
 services:
 
   sut:
-    image: vote
+    image: votes
     entrypoint: node_modules/mocha/bin/mocha --ui tdd test/test.js 
     environment:
-      - DATABASE_NAME=vote_test_db
+      - DATABASE_NAME=votes_test_db
     networks:
       - test_net
     depends_on:
-      - vote
+      - votes
 
-  vote:
+  votes:
     build: .
-    image: vote
+    image: votes
     environment:
-      - DATABASE_NAME=vote_test_db
+      - DATABASE_NAME=votes_test_db
     networks:
       - test_net
-    ports:
-      - "3000:3000"
     depends_on:
-      - database
+      - reports
       - queue
       - worker
+
+  reports:
+    image: subfuzion/vote-reports
+    environment:
+      - DATABASE_NAME=votes_test_db
+    networks:
+      - test_net
+    depends_on:
+      - database
 
   worker:
     image: subfuzion/vote-worker
     environment:
-      - DATABASE_NAME=vote_test_db
+      - DATABASE_NAME=votes_test_db
     networks:
       - test_net
     depends_on:
@@ -49,3 +56,4 @@ services:
     image: redis:3.2
     networks:
       - test_net
+
