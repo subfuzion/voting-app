@@ -28,9 +28,7 @@ suite('vote tests', () => {
       votes.push({ vote: 'b' });
     }
 
-    votes.forEach(async v => {
-      await db.updateVote(v);
-    });
+    await Promise.all(votes.map(vote => db.updateVote(vote)));
   });
 
   after(async () => {
