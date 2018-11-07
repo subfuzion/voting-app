@@ -1,4 +1,4 @@
-version: "2.3"
+version: "2.1"
 
 networks:
   bridge_net:
@@ -15,7 +15,7 @@ services:
     image: redis:3.2
     networks:
       - bridge_net
-
+  
   worker:
     build: src/worker
     networks:
@@ -24,6 +24,20 @@ services:
       - database
       - queue
   
+  reports:
+    build: src/reports
+    networks:
+      - bridge_net
+    depends_on:
+      - database
+  
+  votes:
+    build: src/votes
+    networks:
+      - bridge_net
+    depends_on:
+      - queue
+
   vote:
     build: src/vote
     networks:
@@ -31,6 +45,6 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - database
-      - queue
+      - votes
+      - reports
 
