@@ -93,7 +93,7 @@ Mappings:
   # (note the AMI identifier is region specific)
   AWSRegionToAMI:
       us-east-2:
-          AMI: ami-0a0c6574ce16ce87a	
+          AMI: ami-0a0c6574ce16ce87a
       us-east-1:
           AMI: ami-07eb698ce660402d2
       us-west-2:
@@ -101,7 +101,7 @@ Mappings:
       us-west-1:
           AMI: ami-04c22ba97a0c063c4
       eu-west-3:
-          AMI: ami-0a0948de946510ec0	
+          AMI: ami-0a0948de946510ec0
       eu-west-2:
           AMI: ami-0cb31bf24b130a0f9
       eu-west-1:
@@ -117,7 +117,7 @@ Mappings:
       ap-southeast-1:
           AMI: ami-08d4fe232c67b81b8
       ca-central-1:
-          AMI: ami-055750f063052ec55	
+          AMI: ami-055750f063052ec55
       ap-south-1:
           AMI: ami-05f009513cd58ac90
       sa-east-1:
