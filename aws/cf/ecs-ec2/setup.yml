@@ -11,13 +11,13 @@ Parameters:
     Description: >
       Specifies the ECS Cluster Name with which the resources would be
       associated
-    Default: votepp-demo
+    Default: votingapp
   EcsInstanceType:
     Type: CommaDelimitedList
     Description: >
       Specifies the EC2 instance type for your container instances.
-      Defaults to m4.large
-    Default: m4.large
+      Defaults to t2.medium
+    Default: t2.medium
     ConstraintDescription: must be a valid EC2 instance type.
   KeyName:
     Type: String
@@ -29,8 +29,8 @@ Parameters:
     Type: Number
     Description: >
       Specifies the number of instances to launch and register to the cluster.
-      Defaults to 3.
-    Default: '3'
+      Defaults to 4.
+    Default: '4'
   EbsVolumeSize:
     Type: Number
     Description: >

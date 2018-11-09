@@ -12,7 +12,7 @@ Parameters:
     Description: A name for the service
   ImageUrl:
     Type: String
-    Default: subfuzion/vote-api
+    Default: subfuzion/vote-api:1
     Description: The url of a docker image that contains the application process that
                  will handle the traffic for this service
   ContainerPort:
@@ -48,10 +48,6 @@ Parameters:
     Default: ""
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
-  MongoUri:
-    Type: String
-    Default: ""
-    Description: (Optional) Mongo URI
 
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
@@ -87,17 +83,6 @@ Resources:
           Cpu: !Ref 'ContainerCpu'
           Memory: !Ref 'ContainerMemory'
           Image: !Ref 'ImageUrl'
-          Environment:
-            - Name: DATABASE_URI
-              Value:
-                Fn::ImportValue:
-                  !Join [':', [!Ref 'EnvironmentName', 'MongoURI']]
-            - Name: QUEUE_HOST
-              Value:
-                Fn::ImportValue:
-                  !Join [':', [!Ref 'EnvironmentName', 'RedisEndpoint']]
-            - Name: QUEUE_PORT
-              Value: !Ref 'RedisPORT'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
           LogConfiguration:
@@ -118,7 +103,7 @@ Resources:
       Cluster:
         Fn::ImportValue:
           !Join [':', [!Ref 'EnvironmentName', 'ClusterName']]
-      LaunchType: FARGATE
+      LaunchType: EC2
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
