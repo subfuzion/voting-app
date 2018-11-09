@@ -1,4 +1,3 @@
-const Database = require('@subfuzion/database').Database;
 const express= require('express');
 const http = require('http');
 const morgan = require('morgan');
@@ -9,8 +8,6 @@ const app = express();
 const server = http.createServer(app);
 
 let queueConfig = Producer.createStdConfig();
-let databaseConfig = Database.createStdConfig();
-
 let producer, db;
 
 // route logging middleware
@@ -42,11 +39,6 @@ app.post('/vote', async (req, res) => {
 // initialize and start running
 (async () => {
   try {
-    // initialize database client for querying vote results
-    db = new Database(databaseConfig);
-    await db.connect();
-    console.log(`connected to database (${db.connectionURL})`);
-
     // initialize queue producer client for sending votes to the queue
     producer = new Producer('queue', queueConfig);
     producer.on('error', err => {
