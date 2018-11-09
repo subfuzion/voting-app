@@ -191,6 +191,6 @@ Resources:
 Outputs:
   RedisEndpoint:
     Description: The url of the external load balancer
-    Value: !Join ['', [ !GetAtt 'RedisLoadBalancer.DNSName', ':6379' ]]
+    Value: !Join ['', [ !GetAtt 'RedisLoadBalancer.DNSName' ]]
     Export:
       Name: !Join [ ':', [ !Ref 'EnvironmentName', 'RedisEndpoint' ] ]

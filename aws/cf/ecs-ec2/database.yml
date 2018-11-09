@@ -191,6 +191,6 @@ Resources:
 Outputs:
   MongoURI:
     Description: The url of the external load balancer
-    Value: !Join ['', [ !GetAtt 'MongoLoadBalancer.DNSName', ':27017' ]]
+    Value: !Join ['', [ 'mongodb://', !GetAtt 'MongoLoadBalancer.DNSName', ':27017' ]]
     Export:
       Name: !Join [ ':', [ !Ref 'EnvironmentName', 'MongoURI' ] ]
