@@ -8,11 +8,11 @@ const app = express();
 const server = http.createServer(app);
 
 let votesAPI = axios.create({
-    baseURL: 'http://votes:3000/'
+    baseURL: process.env.VOTES_API_URI || 'http://votes:3000/'
 });
 
 let reportsAPI = axios.create({
-    baseURL: 'http://reports:3000/'
+    baseURL: process.env.REPORTS_API_URI || 'http://reports:3000/'
 });
 
 // install route logging middleware
