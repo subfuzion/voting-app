@@ -17,7 +17,7 @@ Parameters:
                  will handle the traffic for this service
   XRayImageUrl:
     Type: String
-    Default: nithmu/nithish:xray
+    Default: subfuzion/vote-xray:1
     Description: The url of a docker image that contains the X-Ray daemon that will
                  handle the traffic for this service
   ContainerPort:
