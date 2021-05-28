@@ -1,5 +1,6 @@
 # Docker Voting App (Node.js version)
 
+<!--
 ## Build Status
 
 | Service  | Docker Image           | Build Status |
@@ -15,14 +16,16 @@
 | @subfuzion/database | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/database.svg)](@subfuzion/database) | [![Travis](https://img.shields.io/travis/subfuzion/voting-app.svg)](https://travis-ci.org/subfuzion/voting-app)
 | @subfuzion/queue    | [![npm (scoped)](https://img.shields.io/npm/v/@subfuzion/queue.svg)](@subfuzion/queue) | [![Travis](https://img.shields.io/travis/subfuzion/voting-app.svg)](https://travis-ci.org/subfuzion/voting-app)
 
+-->
+
 ## Quick Start
 
-Get Docker for free from the [Docker Store](https://www.docker.com/community-edition#/download).
+Install [Docker](https://docs.docker.com/get-docker/).
 This app will work with versions from either the Stable or the Edge channels.
 
 > If you're using [Docker for Windows](https://docs.docker.com/docker-for-windows/) on Windows 10 pro or later, you must also switch to [Linux containers](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers).
 
-Run in this directory:
+In the project's root directory, run:
 
     $ docker-compose up
 
@@ -33,14 +36,14 @@ $ docker run -it --rm --network=host subfuzion/voter vote
 ? What do you like better? (Use arrow keys)
   (quit)
 ❯ cats
-  dogs
+❯ dogs
 ```
 
 You can print voting results:
 
 ```
 $ docker run -it --rm --network=host subfuzion/voter results
-Total votes -> cats: 4, dogs: 0 ... CATS WIN!
+Total votes -> cats: 0, dogs: 1 ... DOGS WIN!
 ```
 
 When you are finished:
@@ -65,15 +68,6 @@ can stop the stack by entering:
 
     $ docker stack rm vote
 
-### Kubernetes
-
-Kubernetes and Helm chart support has been added to the repo. Instructions coming
-soon.
-
-### Amazon ECS with Fargate
-
-Deploy to [AWS ECS with Fargate](https://github.com/subfuzion/voting-app/wiki/Deploy-the-Docker-Voting-App-to-AWS-ECS-with-Fargate)
-
 ## About the Voting App
 
 ![Voting app architecture](https://raw.githubusercontent.com/subfuzion/voting-app/master/images/voting-app-arch-1.1.png)
@@ -82,18 +76,7 @@ This app is based on the original [Docker](https://docker.com) [Example Voting A
 
 For more information, please see the [wiki](https://github.com/subfuzion/voting-app/wiki).
 
-## Introduction to Docker Course
-
-The app will be used for an introductory course called **Software Containerization
-with Docker for Developers**.
-
-The course will be offered through the [UC Davis Extension](https://extension.ucdavis.edu/online-learning) online program, available on [Coursera](https://www.coursera.org/) sometime in the spring of 2018.
-
-See the [wiki](https://github.com/subfuzion/docker-voting-app-nodejs/wiki) for more
-detail about course modules.
-
 ## License
 
 The Voting App is open source and free for any use in compliance with the terms of the
 [MIT License](https://github.com/subfuzion/voting-app/blob/master/LICENSE).
-
