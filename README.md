@@ -1,4 +1,4 @@
-# Docker Voting App (Node.js version)
+# Voting App with Docker (Node.js version)
 
 <!--
 ## Build Status
@@ -74,7 +74,7 @@ can stop the stack by entering:
 
 This app is based on the original [Docker](https://docker.com) [Example Voting App](https://github.com/dockersamples/example-voting-app).
 
-For more information, please see the [wiki](https://github.com/subfuzion/voting-app/wiki).
+For an orientation, see this [presentation](http://bit.ly/voting-app-with-docker).
 
 ## License
 
