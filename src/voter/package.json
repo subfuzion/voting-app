@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "commander": "^2.13.0",
-    "express": "4.16.2",
+    "express": "4.17.3",
     "inquirer": "^5.0.1"
   },
   "devDependencies": {
