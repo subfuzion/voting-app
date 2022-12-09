@@ -20,7 +20,7 @@
     "@subfuzion/queue": "1.5.6",
     "body-parser": "~1.18.3",
     "debug": "~4.1.0",
-    "express": "~4.16.4",
+    "express": "~4.17.3",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
